@@ -1,0 +1,183 @@
+@media (min-width: 801px) {
+  .mobile-nav-container { display: none; }
+}
+
+@media (max-width: 800px) {
+  .mobile-nav-container {
+    position: relative;
+    z-index: 2000;
+  }
+
+  /* Floating menu toggle button */
+  .mnav-toggle {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 2100;
+    background: var(--surface-strong);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    font-size: 1.4rem;
+    color: var(--accent);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease;
+    opacity: 0;
+    animation: fadeInBtn 0.4s ease forwards 0.2s;
+  }
+  .mnav-toggle:hover {
+    background: var(--surface);
+    transform: scale(1.05);
+  }
+  .mnav-toggle.open {
+    transform: rotate(90deg);
+  }
+  @keyframes fadeInBtn {
+    to { opacity: 1; }
+  }
+
+  /* Drawer */
+  .mnav-drawer {
+    position: fixed;
+    top: 0; left: -260px;
+    width: 240px;
+    height: 100%;
+    background: var(--surface-strong);
+    backdrop-filter: blur(14px);
+    box-shadow: 2px 0 14px rgba(0,0,0,0.35);
+    padding-top: 20px;
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2002;
+    display: flex;
+    flex-direction: column;
+  }
+  .mnav-drawer.open { left: 0; }
+
+  /* Logo animation */
+  .mnav-logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+  .mnav-drawer.open .mnav-logo-wrap {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .mnav-logo {
+    max-width: 140px;
+    height: auto;
+  }
+
+  /* Drawer list stagger in */
+  .mnav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+  }
+  .mnav-item {
+    margin: 0;
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  .mnav-drawer.open .mnav-item {
+    animation: itemSlideIn 0.35s ease forwards;
+  }
+  .mnav-drawer.open .mnav-item:nth-child(1) { animation-delay: 0.05s; }
+  .mnav-drawer.open .mnav-item:nth-child(2) { animation-delay: 0.1s; }
+  .mnav-drawer.open .mnav-item:nth-child(3) { animation-delay: 0.15s; }
+  .mnav-drawer.open .mnav-item:nth-child(4) { animation-delay: 0.2s; }
+  .mnav-drawer.open .mnav-item:nth-child(5) { animation-delay: 0.25s; }
+  .mnav-drawer.open .mnav-item:nth-child(6) { animation-delay: 0.3s; }
+  .mnav-drawer.open .mnav-item:nth-child(7) { animation-delay: 0.35s; }
+
+  @keyframes itemSlideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Link hover/focus animation with enhanced glow */
+  .mnav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.35s ease;
+  }
+  .mnav-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at left, rgba(19,200,213,0.25) 0%, transparent 70%);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    z-index: -1;
+    border-radius: 4px;
+  }
+  .mnav-link:hover,
+  .mnav-link:focus-visible {
+    color: var(--text);
+    transform: translateX(5px);
+    box-shadow: 0 0 10px rgba(19, 200, 213, 0.4),
+                0 0 16px rgba(19, 200, 213, 0.25);
+  }
+  .mnav-link:hover::after,
+  .mnav-link:focus-visible::after {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  /* Icon pulse + glow */
+  .mnav-icon {
+    font-size: 1.2rem;
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
+  }
+  .mnav-link:hover .mnav-icon,
+  .mnav-link:focus-visible .mnav-icon {
+    color: var(--text);
+    text-shadow: 0 0 6px rgba(19,200,213,0.75), 0 0 12px rgba(19,200,213,0.5);
+    animation: iconPulse 0.4s ease;
+  }
+
+  @keyframes iconPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  .mnav-label {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* Backdrop fade */
+  .mnav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 2001;
+    animation: backdropFade 0.3s ease;
+  }
+  @keyframes backdropFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}

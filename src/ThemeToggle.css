@@ -1,0 +1,101 @@
+/* src/components/ThemeToggle.css */
+.theme-toggle {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 9999;
+
+  /* Compact by default */
+  width: 48px;
+  height: 48px;
+  padding: 1.8rem 1.8rem 1.8rem 1.8rem;
+
+  /* Shape */
+  border-radius: 5rem;   /* circle at rest, pill on expand */
+  overflow: hidden;
+  background-clip: padding-box;
+
+  /* Background + border */
+  background: var(--color-surface, rgba(255,255,255,0.06)) !important;
+  border: 2px solid var(--color-surface-border, rgba(255,255,255,0.12)) !important;
+
+  /* Shadow (always circular/pill) */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+
+  /* Text + layout */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center icon when compact */
+  color: var(--color-text, #fff);
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  /* Interactions */
+  cursor: pointer;
+  backdrop-filter: blur(10px) saturate(120%);
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.3s ease,
+    width 0.3s ease,          /* 🔑 animate growth */
+    padding 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* On hover: expand from circle to pill */
+.theme-toggle:hover {
+  width: 7rem;     /* enough for icon + label */
+  padding: 1.8rem 0.2rem 1.8rem 0rem;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-accent-cool, #00e5ff);
+  outline-offset: 3px;
+}
+
+/* Inner flex container */
+.toggle-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Keep icon fixed size */
+.toggle-inner .icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Fun rotation only */
+.theme-toggle:hover .icon {
+  transform: rotate(25deg);
+}
+
+/* Label hidden by default */
+.theme-toggle .label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: 
+    max-width 0.3s ease, 
+    opacity 0.3s ease, 
+    margin-left 0.3s ease;
+  margin-left: 0;
+}
+
+/* Reveal label on hover */
+.theme-toggle:hover .label {
+  max-width: 80px; /* enough space for "Light" or "Dark" */
+  opacity: 1;
+  margin-left: 0.5rem;
+}

@@ -1,0 +1,182 @@
+/* ===== DESIGN TOKENS =====
+   These reference your App.css variables where possible
+   so dark/light theme switching works seamlessly
+*/
+:root {
+  --nav-surface: rgba(20, 20, 20, 0.55);         /* transparent glass */
+  --nav-surface-strong: rgba(20, 20, 20, 0.72);
+  --nav-border: var(--color-surface-border, rgba(255, 255, 255, 0.08));
+  --nav-ring: rgba(255, 255, 255, 0.5);
+  --nav-accent: var(--color-accent-cool, #13c8d5);
+  --nav-text: var(--color-text, #ffffff);
+  --nav-muted: rgba(255, 255, 255, 0.75);
+  --nav-radius: 20px;
+  --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  --rail: 68px;
+  --rail-expanded: 240px;
+  --icon-size: 1.3rem;
+}
+
+/* Light mode overrides (optional) */
+:root[data-theme="light"] {
+  --nav-surface: rgba(255, 255, 255, 0.55);
+  --nav-surface-strong: rgba(255, 255, 255, 0.72);
+  --nav-border: var(--color-surface-border, #e0e0e0);
+  --nav-ring: rgba(0, 0, 0, 0.4);
+  --nav-muted: rgba(0, 0, 0, 0.65);
+}
+
+/* ===== BASE RAIL (Desktop) ===== */
+.nav-rail {
+  position: fixed;
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+  z-index: 1000;
+
+  width: var(--rail);
+  padding: 10px;
+  border-radius: 24px;
+  background: var(--nav-surface);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--nav-shadow);
+
+  transition: width 240ms cubic-bezier(0.4, 0, 0.2, 1),
+              background 200ms ease;
+}
+
+/* Expand labels on hover/focus (desktop only) */
+@media (hover: hover) {
+  .nav-rail:hover,
+  .nav-rail:focus-within {
+    width: var(--rail-expanded);
+  }
+}
+
+/* ===== NAV LIST ===== */
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-item { margin: 0; }
+
+/* ===== LINKS ===== */
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 12px;
+  border-radius: 16px;
+
+  color: var(--nav-muted);
+  text-decoration: none;
+  outline: none;
+
+  transition: background 180ms ease,
+              color 180ms ease,
+              box-shadow 220ms ease;
+}
+
+/* Active & Hover */
+.nav-link.active,
+.nav-link:hover {
+  background: color-mix(in srgb, var(--nav-accent) 25%, transparent);
+  color: var(--nav-text);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--nav-accent) 25%, transparent);
+}
+
+/* Active indicator (desktop) */
+@media (min-width: 801px) {
+  .nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 9px;
+    bottom: 9px;
+    width: 4px;
+    border-radius: 4px;
+    background: var(--nav-accent);
+    opacity: 0.85;
+  }
+  .nav-link { padding-left: 18px; }
+}
+
+/* Keyboard focus outline */
+.nav-link:focus-visible {
+  outline: 2px solid var(--nav-ring);
+  outline-offset: 3px;
+}
+
+/* ===== ICON ===== */
+.icon {
+  display: inline-grid;
+  place-items: center;
+  /* padding: 1rem; */
+  min-width: 42px;
+  min-height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--nav-accent);
+  background: color-mix(in srgb, var(--nav-accent) 12%, transparent);
+  color: var(--nav-accent);
+  font-size: var(--icon-size);
+  transition: transform 120ms ease,
+              border-color 160ms ease,
+              background 160ms ease,
+              color 160ms ease;
+}
+
+/* Hover/Active icon state */
+.nav-link:hover .icon,
+.nav-link.active .icon,
+.nav-link:focus-visible .icon {
+  transform: scale(1.08);
+  border-color: var(--nav-accent);
+  background: color-mix(in srgb, var(--nav-accent) 30%, transparent);
+  color: var(--nav-text);
+}
+
+/* ===== LABEL ===== */
+.label {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  color: var(--nav-text);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.25));
+  transition: max-width 200ms ease, opacity 150ms ease;
+}
+
+/* Reveal labels on hover/focus (desktop) */
+@media (hover: hover) and (min-width: 801px) {
+  .nav-rail:hover .label,
+  .nav-rail:focus-within .label {
+    max-width: 160px;
+    opacity: 1;
+  }
+}
+
+/* ===== MOBILE: Bottom Tab Bar ===== */
+@media (max-width: 800px) {
+  .nav-rail { display: none; }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .nav-rail,
+  .nav-link,
+  .icon,
+  .label {
+    transition: none !important;
+  }
+}
