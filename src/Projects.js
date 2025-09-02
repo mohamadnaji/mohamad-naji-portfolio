@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './Projects.css';
+import SectionTitle from './components/SectionTitle.js';
 
 const projects = [
   {
@@ -42,7 +43,10 @@ const Projects = () => {
 
   return (
     <section className="projects-section" id="projects">
-      <h2>Projects</h2>
+      <h2></h2>
+      <SectionTitle subtitle="My Recent">
+        Projects
+      </SectionTitle>
       <div className="projects-list">
         {projects.map((project, i) => (
           <div className="project-card" key={i}>

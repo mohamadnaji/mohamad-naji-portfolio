@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './Education.css';
+import SectionTitle from './components/SectionTitle.js';
 
 // If your logos are inside /public/assets, use the string path: "/assets/ul.png".
 // If they're in src, import them:
@@ -71,8 +72,10 @@ export default function Education() {
 
   return (
     <section id="education" aria-labelledby="education-title">
-      <h2 id="education-title" className="section-title">Education</h2>
 
+      <SectionTitle subtitle="My Academic">
+        Education
+      </SectionTitle>
       <div className="timeline" role="list">
         {education.map((edu, idx) => {
           const key = `${edu.school}-${edu.degree}-${edu.date}-${idx}`;

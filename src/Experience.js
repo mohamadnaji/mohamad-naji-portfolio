@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './Experience.css';
+import SectionTitle from './components/SectionTitle.js';
 
 const experience = [
   {
@@ -75,7 +76,9 @@ const Experience = () => {
 
   return (
     <section className="experience-section" id="experience">
-      <h2>Experience</h2>
+      <SectionTitle subtitle="My Professional">
+        Experience
+      </SectionTitle>
       <div className="timeline">
         {experience.map((item, index) => (
           <div className="timeline-item" key={index}>

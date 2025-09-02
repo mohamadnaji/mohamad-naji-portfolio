@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
   FaHome,
@@ -21,105 +20,111 @@ const NAV_ITEMS = [
   { href: '#contact', icon: <FaEnvelope />, text: 'Contact' },
 ];
 
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' &&
-  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
-export default function Navbar() {
+const Navbar = () => {
   const [active, setActive] = useState('#hero');
-
   const isNavScrollRef = useRef(false);
   const pendingHrefRef = useRef(null);
   const lastScrollYRef = useRef(0);
   const scrollDirectionRef = useRef('down');
   const unlockTimerRef = useRef(null);
 
-  // Track scroll direction
+  // Track scroll direction for better section highlighting
   useEffect(() => {
-    const onScroll = () => {
+    const handleScroll = () => {
       const currentY = window.scrollY;
       scrollDirectionRef.current = currentY > lastScrollYRef.current ? 'down' : 'up';
       lastScrollYRef.current = currentY;
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // IntersectionObserver for section highlighting
+  // Intersection observer for automatic section highlighting
   useEffect(() => {
-    const ids = NAV_ITEMS.map(i => i.href.slice(1));
-    const sections = ids
+    const sectionIds = NAV_ITEMS.map(item => item.href.slice(1));
+    const sections = sectionIds
       .map(id => document.getElementById(id))
       .filter(Boolean);
 
     if (!sections.length) return;
 
     const observer = new IntersectionObserver(
-      entries => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
+      (entries) => {
+        // Skip updates during programmatic scrolling
+        if (isNavScrollRef.current) return;
+
+        const visibleSections = entries
+          .filter(entry => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-        if (!visible[0]?.target?.id) return;
+        if (!visibleSections[0]?.target?.id) return;
 
-        const newHref = `#${visible[0].target.id}`;
-        if (newHref === active) return;
-
-        if (isNavScrollRef.current) {
-          const currentIndex = NAV_ITEMS.findIndex(i => i.href === active);
-          const newIndex = NAV_ITEMS.findIndex(i => i.href === newHref);
-
-          if (
-            (scrollDirectionRef.current === 'down' && newIndex > currentIndex) ||
-            (scrollDirectionRef.current === 'up' && newIndex < currentIndex)
-          ) {
-            setActive(newHref);
-          }
-
-          if (newHref === pendingHrefRef.current) {
-            clearTimeout(unlockTimerRef.current);
-            unlockTimerRef.current = setTimeout(() => {
-              isNavScrollRef.current = false;
-              pendingHrefRef.current = null;
-            }, 120);
-          }
-        } else {
+        const newHref = `#${visibleSections[0].target.id}`;
+        
+        // Only update if it's actually different
+        if (newHref !== active) {
           setActive(newHref);
         }
       },
-      { rootMargin: '-45% 0px -45% 0px' }
+      { 
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      }
     );
 
-    sections.forEach(s => observer.observe(s));
+    sections.forEach(section => observer.observe(section));
+    
     return () => {
       observer.disconnect();
       clearTimeout(unlockTimerRef.current);
     };
   }, [active]);
 
-  const onNavClick = useCallback(
-    href => e => {
-      const target = document.querySelector(href);
-      if (!target) return;
+  // Handle navigation clicks
+  const handleNavClick = useCallback((href) => (e) => {
+    const target = document.querySelector(href);
+    if (!target) return;
 
-      e.preventDefault();
+    e.preventDefault();
 
-      isNavScrollRef.current = true;
-      pendingHrefRef.current = href;
+    // Immediately update active state
+    setActive(href);
 
-      target.scrollIntoView({
-        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-        block: 'start',
-      });
+    // Set scroll lock with longer duration
+    isNavScrollRef.current = true;
+    pendingHrefRef.current = href;
 
-      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
-      target.focus({ preventScroll: true });
-    },
-    []
-  );
+    // Clear any existing unlock timer
+    clearTimeout(unlockTimerRef.current);
+
+    // Smooth scroll to section
+    target.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+        ? 'auto' 
+        : 'smooth',
+      block: 'start',
+    });
+
+    // Set focus for accessibility
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '-1');
+    }
+    target.focus({ preventScroll: true });
+
+    // Unlock after scroll completes (longer timeout for long scrolls)
+    unlockTimerRef.current = setTimeout(() => {
+      isNavScrollRef.current = false;
+      pendingHrefRef.current = null;
+    }, 1500);
+  }, []);
 
   return (
-    <nav className="nav-rail" role="navigation" aria-label="Main navigation">
+    <nav 
+      className="nav-rail" 
+      role="navigation" 
+      aria-label="Main navigation"
+    >
       <ul className="nav-list">
         {NAV_ITEMS.map(({ href, icon, text }) => {
           const isActive = active === href;
@@ -129,10 +134,13 @@ export default function Navbar() {
                 href={href}
                 className={`nav-link${isActive ? ' active' : ''}`}
                 aria-current={isActive ? 'page' : undefined}
-                onClick={onNavClick(href)}
+                onClick={handleNavClick(href)}
                 title={text}
+                aria-label={`Navigate to ${text} section`}
               >
-                <span className="icon" aria-hidden="true">{icon}</span>
+                <span className="icon" aria-hidden="true">
+                  {icon}
+                </span>
                 <span className="label">{text}</span>
               </a>
             </li>
@@ -141,4 +149,6 @@ export default function Navbar() {
       </ul>
     </nav>
   );
-}
+};
+
+export default Navbar;
