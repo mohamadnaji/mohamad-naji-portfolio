@@ -1,11 +1,12 @@
 /* ================= HERO SECTION ================= */
+/* Note: Common styles (variables, keyframes, utilities) are now in App.css */
 
 .hero-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 2rem 4rem 12%;
-  min-height: 90vh;
+  padding: 4rem 3rem 4rem 12%;
+  min-height: 100vh;
   position: relative;
   z-index: 1;
   font-family: 'Inter', sans-serif;
@@ -48,6 +49,7 @@
 :root[data-theme="light"] .hero-container {
   background: linear-gradient(135deg, #fff 0%, #f8fafc 30%, #f1f5f9 70%, #fff 100%);
 }
+
 :root[data-theme="light"] .hero-container::before {
   background:
     radial-gradient(circle at 20% 80%, var(--hero-glow-primary) 0%, transparent 50%),
@@ -76,7 +78,8 @@
   filter: blur(12px);
   opacity: 0.5;
 }
-/* Light mode social icons - Clean car light design */
+
+/* Light mode social icons */
 :root[data-theme="light"] .hero-socials a {
   color: #1e293b;
   position: relative;
@@ -99,7 +102,6 @@
   backdrop-filter: blur(12px);
 }
 
-/* Hover effect for social icons */
 :root[data-theme="light"] .hero-socials a:hover {
   color: #0f172a;
   background: linear-gradient(135deg, 
@@ -116,7 +118,7 @@
   border-color: rgba(255, 255, 255, 1);
 }
 
-/* GitHub icon - Flash animation like car light */
+/* GitHub icon light mode animation */
 :root[data-theme="light"] .git-icon {
   color: #1e293b;
   filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
@@ -124,7 +126,6 @@
   transition: all 0.3s ease;
 }
 
-/* Car light flash animation - on/off effect */
 @keyframes gitFlash {
   0% {
     filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
@@ -156,7 +157,6 @@
   }
 }
 
-/* GitHub icon hover state */
 :root[data-theme="light"] .git-icon:hover {
   color: #0f172a;
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1))
@@ -166,7 +166,6 @@
   animation-play-state: paused;
 }
 
-/* Subtle glow halo for hover effect */
 :root[data-theme="light"] .hero-socials a::before {
   content: '';
   position: absolute;
@@ -186,13 +185,11 @@
   opacity: 1;
 }
 
-/* Active state */
 :root[data-theme="light"] .hero-socials a:active {
   transform: scale(1.05) rotate(1deg);
   transition-duration: 0.1s;
 }
 
-/* Focus state for accessibility */
 :root[data-theme="light"] .hero-socials a:focus {
   outline: none;
   box-shadow:
@@ -213,37 +210,6 @@
   animation-delay: 0.3s;
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  background: linear-gradient(135deg, rgba(14,165,233,0.1) 0%, rgba(139,92,246,0.08) 100%);
-  color: var(--hero-primary);
-  padding: 0.6rem 1.4rem;
-  border-radius: 24px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(14,165,233,0.2);
-  backdrop-filter: blur(12px);
-  box-shadow: var(--hero-shadow-sm);
-  position: relative;
-  overflow: hidden;
-}
-.hero-badge::before {
-  content: "";
-  position: absolute;
-  top: 0; left: -100%; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  animation: borderShine 3s infinite;
-}
-.hero-badge::after {
-  content: "●";
-  color: var(--hero-success);
-  margin-right: 0.6rem;
-  animation: blink 2.5s infinite;
-  font-size: 0.7em;
-}
-
 .hero-left h1 {
   font-family: 'Inter', sans-serif;
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -259,19 +225,7 @@
   animation: textShimmer 6s ease-in-out infinite;
   position: relative;
 }
-.hero-left h1::before {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  background-size: inherit;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: blur(20px);
-  opacity: 0.4;
-  z-index: -1;
-}
+
 .hero-left h2 {
   font-size: clamp(1.25rem, 2.5vw, 1.9rem);
   font-weight: 600;
@@ -282,50 +236,6 @@
   line-height: 1.4;
 }
 
-.hero-left p {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: var(--hero-text-muted);
-  margin-bottom: 2rem;
-  max-width: 580px;
-  font-weight: 400;
-}
-.hero-left p .highlight {
-  color: var(--hero-primary);
-  font-weight: 600;
-  background: linear-gradient(135deg, var(--hero-glow-primary), transparent);
-  padding: 0.1rem 0.3rem;
-  border-radius: 4px;
-  position: relative;
-}
-
-/* Tech stack pills */
-.tech-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin: 1.5rem 0 2.5rem 0;
-}
-.tech-pill {
-  background: linear-gradient(135deg, rgba(14,165,233,0.08) 0%, rgba(139,92,246,0.06) 100%);
-  color: var(--hero-text-secondary);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border: 1px solid rgba(14,165,233,0.15);
-  backdrop-filter: blur(8px);
-  transition: var(--hero-transition-fast);
-  position: relative;
-  overflow: hidden;
-}
-.tech-pill:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, rgba(14,165,233,0.15) 0%, rgba(139,92,246,0.12) 100%);
-  border-color: rgba(14,165,233,0.3);
-  box-shadow: var(--hero-shadow-sm);
-}
-
 /* HERO BUTTONS */
 .hero-buttons {
   display: flex;
@@ -334,6 +244,7 @@
   margin-top: 3rem;
   align-items: center;
 }
+
 .hero-button {
   background: linear-gradient(135deg, var(--hero-primary) 0%, var(--hero-secondary) 100%);
   color: #fff;
@@ -353,6 +264,7 @@
   cursor: pointer;
   backdrop-filter: blur(12px);
 }
+
 .hero-button::before {
   content: "";
   position: absolute;
@@ -361,6 +273,7 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .hero-button::after {
   content: "";
   position: absolute;
@@ -368,16 +281,20 @@
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   transition: left 0.6s ease;
 }
+
 .hero-button:hover {
   transform: translateY(-6px) scale(1.03);
   box-shadow: 0 0 40px var(--hero-glow-primary), 0 12px 40px rgba(14,165,233,0.3), var(--hero-shadow-lg);
 }
+
 .hero-button:hover::before {
   opacity: 1;
 }
+
 .hero-button:hover::after {
   left: 100%;
 }
+
 .hero-button:active {
   transform: translateY(-3px) scale(1.01);
 }
@@ -392,6 +309,7 @@
   position: relative;
   overflow: hidden;
 }
+
 .cv-button::before {
   content: "";
   position: absolute;
@@ -401,17 +319,19 @@
   transition: opacity 0.3s ease;
   z-index: -1;
 }
+
 .cv-button:hover {
   color: #fff;
   transform: translateY(-6px) scale(1.03);
   border-color: var(--hero-primary);
   box-shadow: 0 0 30px var(--hero-glow-primary), 0 8px 32px rgba(14,165,233,0.2), var(--hero-shadow-md);
 }
+
 .cv-button:hover::before {
   opacity: 1;
 }
 
-/* PORTRAIT + ANIMATION (Enhanced Glow, No Hover) */
+/* RIGHT COLUMN - PORTRAIT */
 .hero-right {
   flex: 1;
   display: flex;
@@ -489,68 +409,7 @@
   transition: var(--hero-transition);
 }
 
-.portrait-wrapper:hover {
-  transform: none;
-  filter: drop-shadow(0 0 25px rgba(14,165,233,0.5));
-}
 
-.portrait-wrapper:hover img {
-  box-shadow:
-    0 0 50px rgba(14,165,233,0.5),
-    0 0 40px rgba(139,92,246,0.3),
-    0 8px 30px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  border-color: transparent;
-}
-
-@keyframes pulseGlow {
-  0% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.05); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 0.5; }
-}
-
-/* Rest of hero animations (typing, particles, code-symbols, responsive) remain unchanged */
-/* ... include all previous sections for .typing-animation, .cursor, .particles, .code-symbols, media queries ... */
-
-@media (prefers-reduced-motion: reduce) {
-  .code-symbol, .particle {
-    animation: none !important;
-  }
-}
-
-
-.portrait-wrapper.glow {
-  transform: scale(1.15) rotateZ(-3deg);
-  filter:
-    drop-shadow(0 0 60px var(--hero-glow-primary))
-    drop-shadow(0 0 40px var(--hero-glow-secondary))
-    drop-shadow(0 0 20px var(--hero-glow-success));
-}
-
-/* TYPING ANIMATION */
-.typing-animation {
-  color: var(--hero-primary);
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  position: relative;
-  background: linear-gradient(135deg, var(--hero-primary), var(--hero-secondary));
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientMove 4s ease-in-out infinite;
-}
-.cursor {
-  display: inline-block;
-  background: linear-gradient(180deg, var(--hero-primary), var(--hero-secondary));
-  width: 3px;
-  margin-left: 6px;
-  height: 1.3em;
-  vertical-align: bottom;
-  animation: blink 1.5s infinite;
-  box-shadow: 0 0 15px var(--hero-primary);
-  border-radius: 2px;
-}
 
 /* PARTICLES */
 .hero-container .particles {
@@ -569,6 +428,7 @@
   animation: floatParticle linear infinite;
   will-change: transform, opacity;
 }
+
 .hero-container .particle:nth-child(1) {
   width: 12px;
   height: 12px;
@@ -577,6 +437,7 @@
   background: var(--hero-primary);
   animation-duration: 28s;
 }
+
 .hero-container .particle:nth-child(2) {
   width: 20px;
   height: 20px;
@@ -586,6 +447,7 @@
   animation-duration: 35s;
   animation-delay: 5s;
 }
+
 .hero-container .particle:nth-child(3) {
   width: 8px;
   height: 8px;
@@ -595,6 +457,7 @@
   animation-duration: 22s;
   animation-delay: 10s;
 }
+
 .hero-container .particle:nth-child(4) {
   width: 15px;
   height: 15px;
@@ -604,6 +467,7 @@
   animation-duration: 30s;
   animation-delay: 15s;
 }
+
 .hero-container .particle:nth-child(5) {
   width: 25px;
   height: 25px;
@@ -622,7 +486,7 @@
   100% { transform: translateY(-120vh) translateX(-20vw); opacity: 0; }
 }
 
-/* CODE SYMBOLS FLOATING */
+/* CODE SYMBOLS */
 .hero-container .code-symbols {
   position: fixed;
   inset: 0;
@@ -645,10 +509,8 @@
   white-space: nowrap;
   transform-origin: center center;
   transition: color 4s ease;
-  /* Use transform with GPU acceleration */
   backface-visibility: hidden;
   transform-style: preserve-3d;
-  /* Placeholder for parallax variables */
   transform: translate(calc(var(--mouse-x, 0) + var(--x)), calc(var(--mouse-y, 0) + var(--y))) rotate(var(--r));
 }
 
@@ -656,10 +518,12 @@
   color: var(--hero-secondary);
   font-size: 1.5rem;
 }
+
 .hero-container .code-symbol:nth-child(3n) {
   color: var(--hero-accent);
   font-size: 1rem;
 }
+
 .hero-container .code-symbol:nth-child(5n) {
   color: var(--hero-success);
   font-size: 1.8rem;
@@ -670,6 +534,7 @@
   opacity: 0.4;
 }
 
+/* SOCIAL LINKS */
 .hero-socials {
   margin-top: 2rem;
   display: flex;
@@ -681,7 +546,6 @@
   font-size: 1.8rem;
   color: var(--text-color, #fff);
   transition: transform 0.3s ease, color 0.3s ease;
-  
   padding: 8px;
 }
 
@@ -693,63 +557,26 @@
 .hero-socials a:active {
   transform: scale(0.95);
 }
-/* Git icon flashing */
+
+/* Git icon animation */
 .git-icon {
-  font-size: 3rem;         /* adjust size */
-  color: #ffffff;          /* keep the icon white */
+  font-size: 3rem;
+  color: #ffffff;
   animation: gitGlow 2s infinite;
 }
 
-@keyframes gitGlow {
-  0% {
-    filter: drop-shadow(0 0 2px #00f7ff) drop-shadow(0 0 4px #00f7ff);
-  }
-  20% {
-    filter: drop-shadow(0 0 8px #00f7ff) drop-shadow(0 0 16px #00f7ff);
-  }
-  25% {
-    filter: drop-shadow(0 0 20px #00f7ff) drop-shadow(0 0 40px #00f7ff);
-  }
-  40% {
-    filter: drop-shadow(0 0 8px #00f7ff) drop-shadow(0 0 16px #00f7ff);
-  }
-  60% {
-    filter: drop-shadow(0 0 2px #00f7ff) drop-shadow(0 0 4px #00f7ff);
-  }
-  70% {
-    filter: drop-shadow(0 0 15px #00f7ff) drop-shadow(0 0 30px #00f7ff);
-  }
-  100% {
-    filter: drop-shadow(0 0 4px #00f7ff) drop-shadow(0 0 8px #00f7ff);
-  }
-}
 
 
+/* Hero-specific animations are now in App.css for reusability */
 
-
-/* Keyframes */
-@keyframes floatSymbol {
-  0% { transform: translate(0, 0) rotate(0); opacity: 0.2; }
-  50% { transform: translate(var(--x), var(--y)) rotate(var(--r)); opacity: 0.35; }
-  100% { transform: translate(0, 0) rotate(0); opacity: 0.2; }
-}
-@keyframes pulseScale {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.1) rotate(5deg); }
-}
-@keyframes cycleColors {
-  0%, 100% { color: var(--hero-primary); }
-  33% { color: var(--hero-secondary); }
-  66% { color: var(--hero-accent); }
-}
+/* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
-  /* ================= Layout Adjustments ================= */
   .hero-container {
     flex-direction: column-reverse;
     text-align: center;
     justify-content: center;
     align-items: center;
-    padding: 0rem 1rem 1rem; /* less padding on mobile */
+    padding: 0rem 1rem 1rem;
     gap: 0rem;
   }
 
@@ -764,40 +591,35 @@
   }
 
   .hero-left h1 {
-    
-    margin-top: 0.75rem; /* tighter gap after image */
+    margin-top: 0.75rem;
     font-size: clamp(2rem, 8vw, 3rem);
     margin-bottom: 0.8rem;
   }
+
   .hero-left h2 {
     font-size: clamp(1.1rem, 4vw, 1.5rem);
     margin-bottom: 1.2rem;
-  }
-  .hero-left p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
   }
 
   .hero-socials {
     justify-content: center;
     margin-top: 1rem;
-
   }
+
   .hero-buttons {
     display: flex;
-    flex-direction: row;        /* put them beside each other */
-    justify-content: center;    /* center them horizontally */
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;                  /* space between buttons */
+    gap: 1rem;
     margin-top: 2rem;
-    flex-wrap: wrap;            /* allow wrapping if too small */
+    flex-wrap: wrap;
   }
 
   .hero-button,
   .cv-button {
-    width: auto;                /* remove the 50% width */
-    max-width: none;            /* allow natural width */
+    width: auto;
+    max-width: none;
     padding: 1rem 1.5rem;
     font-size: 1rem;
   }
@@ -814,47 +636,18 @@
     inset: -6px;
   }
 
-  .hero-badge {
-    font-size: 0.85rem;
-    padding: 0.5rem 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .tech-stack {
-    justify-content: center;
-    margin: 1.2rem 0 2rem 0;
-  }
-  .tech-pill {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .hero-metrics {
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
-  /* ================= Animation / Performance Stops ================= */
-  /* Stop code symbols animation */
+  /* Performance optimizations for mobile */
   .hero-container .code-symbol {
     animation: none !important;
     opacity: 0.5 !important;
-    /* transform: none !important; */
   }
-  /* Hide extra code symbols */
-  /* .hero-container .code-symbol:nth-child(n+6) {
-    display: none;
-  } */
 
-  /* ✅ Keep particles running on mobile */
   .particles .particle {
     width: 10px;
     height: 10px;
     filter: blur(2px);
-    /* Animation continues (no disable here) */
   }
 
-  /* Reduce glowing effects */
   .hero-container::before,
   .portrait-wrapper::before,
   .portrait-wrapper::after {
@@ -862,14 +655,11 @@
     filter: blur(50px);
   }
 
-  /* Stop floating portrait animation */
   .portrait-wrapper {
     animation: none !important;
   }
 
-  /* Reduce hero container blur */
   .hero-container::before {
     filter: blur(80px);
   }
 }
-

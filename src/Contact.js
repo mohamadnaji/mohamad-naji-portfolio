@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
 import './Contact.css';
+import SectionTitle from './components/SectionTitle.js';
 
 const Contact = () => {
   const formRef = useRef();
@@ -48,10 +49,11 @@ const Contact = () => {
 
   return (
     <section className="contact-section reveal" id="contact">
-      <h2 className="contact-title reveal-child">Let’s Work Together</h2>
-      <p className="contact-intro reveal-child">
-        Have an idea, a project, or just want to say hello — I’m always happy to connect.
-      </p>
+      
+      <SectionTitle subtitle="Have an idea, a project, or just want to say hello. I’m always happy to connect.">
+        Let’s Work Together
+      </SectionTitle>
+
 
       <div className="contact-grid">
         {/* Info */}

@@ -1,4 +1,5 @@
 import './Skills.css';
+import SectionTitle from './components/SectionTitle.js';
 import React, { useEffect } from 'react';
 
 const skills = [
@@ -75,7 +76,10 @@ const Skills = () => {
 
   return (
     <section className="skills-section" id="skills">
-      <h2 className="section-title">Skills</h2>
+      
+      <SectionTitle subtitle="My Technical Expertise">
+        Skills
+      </SectionTitle>
       <div className="skills-container">
         {skills.map((group, index) => (
           <div key={index} className="skills-group">
