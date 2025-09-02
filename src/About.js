@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import SectionTitle from './components/SectionTitle';
+import SectionTitle from './components/SectionTitle.js';
 import './About.css';
 import profileImg from './assets/profile.png';
 
