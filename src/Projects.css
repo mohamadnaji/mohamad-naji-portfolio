@@ -3,7 +3,7 @@
   padding: 4rem 12%;
   background: transparent;
   color: var(--color-text);
-  min-width: 70vh;
+  /* min-width: 50vh; */
 }
 
 .projects-list {

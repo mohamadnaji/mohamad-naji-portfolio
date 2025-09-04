@@ -1,6 +1,6 @@
 .experience-section {
   margin-left: var(--sidebar-width, 0);
-  padding: 5rem 12%;
+  padding: 3rem 12%;
   background: transparent;
   color: var(--color-text);
   transition: background 0.3s ease;
@@ -121,6 +121,6 @@
 @media (max-width: 900px) {
   .experience-section {
     margin-left: 0;
-    padding: 3rem 8%;
+    padding: 3rem 4%;
   }
 }
