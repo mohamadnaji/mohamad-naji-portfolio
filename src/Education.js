@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { FaGraduationCap, FaCalendarAlt, FaMapMarkerAlt, FaAward } from 'react-icons/fa';
+import SectionTitle from './components/SectionTitle';
 import './Education.css';
-import SectionTitle from './components/SectionTitle.js';
-
-// If your logos are inside /public/assets, use the string path: "/assets/ul.png".
-// If they're in src, import them:
-// import ulLogo from '../assets/ul.png';
 
 const education = [
   {
@@ -12,23 +9,26 @@ const education = [
     school: 'Lebanese University',
     location: 'Beirut, Lebanon',
     date: '2022 – 2024',
+    type: 'Master\'s',
+    level: 'Graduate',
     details: [
       'Relevant courses: Python, Deep Learning, Big Data, NLP, Remote Sensing, Geodatabase, Spatial Analysis'
     ],
-    // Use one of the following:
     logo: '/assets/ul.png',
-    // logo: ulLogo,
+    current: false
   },
   {
     degree: "Bachelor's degree, Computer Science",
     school: 'Lebanese University',
     location: 'Beirut, Lebanon',
     date: '2016 – 2019',
+    type: 'Bachelor\'s',
+    level: 'Undergraduate',
     details: [
       'Relevant courses: Java, PHP, Design Patterns, Data Structures, Database, Operating Systems, Parallel Programming, System Administration'
     ],
     logo: '/assets/ul.png',
-    // logo: ulLogo,
+    current: false
   }
 ];
 
@@ -37,97 +37,138 @@ function getInitials(name = '') {
   return parts.slice(0, 2).map(w => (w[0] || '').toUpperCase()).join('');
 }
 
-export default function Education() {
+const Education = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const prefersReduced =
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const items = Array.from(document.querySelectorAll('.timeline-item'));
-
-    // If reduced motion is preferred or IntersectionObserver isn't supported,
-    // show everything immediately.
-    if (prefersReduced || typeof IntersectionObserver === 'undefined') {
-      items.forEach(el => el.classList.add('in-view'));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            io.unobserve(entry.target);
-          }
-        });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
       },
-      { threshold: 0.15 }
+      {
+        threshold: 0.2,
+        rootMargin: '50px'
+      }
     );
 
-    items.forEach(el => io.observe(el));
-    return () => io.disconnect();
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="education" aria-labelledby="education-title">
-
-      <SectionTitle subtitle="My Academic">
+    <section 
+      className={`education-section ${isVisible ? 'animate-in' : ''}`} 
+      id="education"
+      ref={sectionRef}
+      role="region"
+      aria-label="Educational background and qualifications"
+    >
+      <SectionTitle subtitle="My academic journey and educational qualifications">
         Education
       </SectionTitle>
-      <div className="timeline" role="list">
-        {education.map((edu, idx) => {
-          const key = `${edu.school}-${edu.degree}-${edu.date}-${idx}`;
-          return (
-            <article
-              role="listitem"
-              className="timeline-item"
-              key={key}
-              // Force stagger timing without relying on extra CSS selectors
-              style={{ transitionDelay: `${idx * 80}ms` }}
-            >
-              <div className="timeline-dot" aria-hidden="true" />
 
-              <div className="card">
-                <header className="edu-card-header">
+      <div className="education-timeline">
+        {education.map((edu, index) => (
+          <article
+            key={`${edu.school}-${edu.degree}-${edu.date}-${index}`}
+            className="education-item"
+            style={{ animationDelay: `${index * 0.2}s` }}
+          >
+            <div className="timeline-dot">
+              <FaGraduationCap />
+            </div>
+
+            <div className="education-card">
+              <div className="education-header">
+                <div className="education-logo-section">
                   {edu.logo ? (
                     <img
-                      className="edu-logo"
+                      className="education-logo"
                       src={edu.logo}
                       alt={`${edu.school} logo`}
                       loading="lazy"
-                      decoding="async"
                     />
                   ) : (
-                    <span className="edu-logo edu-initials" aria-hidden="true">
+                    <span className="education-logo education-initials">
                       {getInitials(edu.school)}
                     </span>
                   )}
+                  <div className="degree-badge">
+                    <FaAward />
+                    <span>{edu.type}</span>
+                  </div>
+                </div>
 
-                  <div className="edu-heading">
-                    <time className="edu-date">{edu.date}</time>
-                    <h3 className="edu-degree">{edu.degree}</h3>
-                    <div className="edu-meta">
-                      <span className="edu-school">{edu.school}</span>
-                      <span className="edu-sep" aria-hidden="true">•</span>
-                      <span className="edu-location">{edu.location}</span>
+                <div className="education-info">
+                  <h3 className="degree-title">{edu.degree}</h3>
+                  <h4 className="school-name">{edu.school}</h4>
+                  
+                  <div className="education-meta">
+                    <div className="meta-item">
+                      <FaCalendarAlt />
+                      <span>{edu.date}</span>
+                    </div>
+                    <div className="meta-item">
+                      <FaMapMarkerAlt />
+                      <span>{edu.location}</span>
                     </div>
                   </div>
-                </header>
+                </div>
+              </div>
 
-                {edu.details?.length > 0 && (
-                  <ul className="edu-bullets">
-                    {edu.details.map((d, i) => (
-                      <li key={i}>{d}</li>
+              {edu.details && edu.details.length > 0 && (
+                <div className="education-details">
+                  <h5>Relevant Coursework:</h5>
+                  <ul className="course-list">
+                    {edu.details.map((detail, i) => (
+                      <li key={i}>{detail}</li>
                     ))}
                   </ul>
-                )}
-              </div>
-            </article>
-          );
-        })}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {/* Education summary */}
+      <div className="education-summary">
+        <div className="summary-item">
+          <div className="summary-icon">
+            <FaGraduationCap />
+          </div>
+          <div className="summary-content">
+            <h4>Master's Degree</h4>
+            <p>GIS and Data Science</p>
+          </div>
+        </div>
+        <div className="summary-item">
+          <div className="summary-icon">
+            <FaAward />
+          </div>
+          <div className="summary-content">
+            <h4>7+ Years</h4>
+            <p>Academic Excellence</p>
+          </div>
+        </div>
+        <div className="summary-item">
+          <div className="summary-icon">
+            <FaMapMarkerAlt />
+          </div>
+          <div className="summary-content">
+            <h4>Lebanese University</h4>
+            <p>Prestigious Institution</p>
+          </div>
+        </div>
       </div>
     </section>
   );
-}
+};
+
+export default Education;

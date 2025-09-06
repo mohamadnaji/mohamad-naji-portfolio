@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { FaMapMarkerAlt, FaCalendarAlt, FaBriefcase } from 'react-icons/fa';
+import SectionTitle from './components/SectionTitle';
 import './Experience.css';
-import SectionTitle from './components/SectionTitle.js';
 
 const experience = [
   {
     title: 'Software Developer',
     company: 'Nakisa Inc',
-    date: 'May 2025 – Present (Montreal, QC, Canada)',
+    date: 'May 2025 – Present',
+    location: 'Montreal, QC, Canada',
+    type: 'Full-time',
     logo: './assets/nakisa.png',
+    current: true,
     details: [
       'Finance Department – building and maintaining financial applications.',
       'Backend services with Java Spring Boot.',
@@ -18,8 +22,11 @@ const experience = [
   {
     title: 'Senior Full Stack Developer',
     company: 'MyMonty (Monty Mobile)',
-    date: 'Nov 2022 – Jun 2025 (Remote)',
+    date: 'Nov 2022 – Jun 2025',
+    location: 'Remote',
+    type: 'Contract',
     logo: './assets/mymonty.png',
+    current: false,
     details: [
       'Created 30+ RESTful APIs with Java Spring Boot, OpenAPI, and Swagger.',
       'Developed dynamic microservices; integrated Redis for high-speed performance.',
@@ -31,8 +38,11 @@ const experience = [
   {
     title: 'Software Developer',
     company: 'Capital Banking Solutions',
-    date: 'Oct 2021 – Oct 2022 (Lebanon)',
+    date: 'Oct 2021 – Oct 2022',
+    location: 'Lebanon',
+    type: 'Full-time',
     logo: './assets/cbs.png',
+    current: false,
     details: [
       'Developed enterprise APIs using Oracle ADF and Spring Boot.',
       'Designed and implemented Oracle PL/SQL databases.',
@@ -42,8 +52,11 @@ const experience = [
   {
     title: 'Software Engineer',
     company: 'Cedar IT Services',
-    date: 'Nov 2019 – Aug 2021 (Lebanon)',
+    date: 'Nov 2019 – Aug 2021',
+    location: 'Lebanon',
+    type: 'Full-time',
     logo: './assets/cits.png',
+    current: false,
     details: [
       'Delivered banking solutions for Banque du Liban, Al Rajhi Bank, and others.',
       'Engineered features with JSF and Spring Boot to meet client specs.',
@@ -54,49 +67,86 @@ const experience = [
 ];
 
 const Experience = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-          }
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.2,
+        rootMargin: '50px'
+      }
     );
 
-    const items = document.querySelectorAll('.timeline-item');
-    items.forEach((el) => observer.observe(el));
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-    return () => {
-      items.forEach((el) => observer.unobserve(el));
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="experience-section" id="experience">
-      <SectionTitle subtitle="My Professional">
-        Experience
+    <section 
+      className={`experience-section ${isVisible ? 'animate-in' : ''}`} 
+      id="experience"
+      ref={sectionRef}
+      role="region"
+      aria-label="Professional work experience"
+    >
+      <SectionTitle subtitle="My professional journey and key achievements">
+        Work Experience
       </SectionTitle>
+
       <div className="timeline">
         {experience.map((item, index) => (
-          <div className="timeline-item" key={index}>
-            <div className="timeline-dot" />
+          <div 
+            className={`timeline-item ${item.current ? 'current-role' : ''}`}
+            key={index}
+            style={{ animationDelay: `${index * 0.2}s` }}
+          >
+            <div className="timeline-dot">
+              <FaBriefcase />
+            </div>
+            
             <div className="timeline-content">
-              <img
-                src={item.logo}
-                alt={`${item.company} logo`}
-                className="company-logo company-logo-centered"
-              />
-              <h4>{item.company}</h4>
-              <h3>{item.title}</h3>
-              <span>{item.date}</span>
-              <ul>
-                {item.details.map((point, i) => (
-                  <li key={i}>{point}</li>
-                ))}
-              </ul>
+              <div className="experience-header">
+                <div className="company-info">
+                  <img
+                    src={item.logo}
+                    alt={`${item.company} logo`}
+                    className="company-logo"
+                  />
+                  <div className="company-details">
+                    <h3 className="job-title">{item.title}</h3>
+                    <h4 className="company-name">{item.company}</h4>
+                    {item.current && <span className="current-badge">Current</span>}
+                  </div>
+                </div>
+                
+                <div className="job-meta">
+                  <div className="job-info">
+                    <FaCalendarAlt />
+                    <span>{item.date}</span>
+                  </div>
+                  <div className="job-info">
+                    <FaMapMarkerAlt />
+                    <span>{item.location}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="experience-details">
+                <ul>
+                  {item.details.map((point, i) => (
+                    <li key={i}>{point}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         ))}
