@@ -379,6 +379,9 @@
 
 .footer-signature {
   text-align: left;
+  
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .footer-signature p {
@@ -582,6 +585,16 @@
 
   .footer-links {
     justify-content: center;
+  }
+
+  .footer-signature p {
+    gap: 0.25rem;    /* Smaller gap for small screens */
+    font-size: 0.95rem; /* Slightly reduced font size */
+    justify-content: center;
+  }
+  .signature-name {
+    display: block;  /* Forces the signature name to next line if needed */
+    margin-top: 0.1rem;
   }
 }
 

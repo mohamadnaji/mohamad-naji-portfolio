@@ -116,6 +116,7 @@ const Skills = () => {
   };
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 600;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -140,8 +141,9 @@ const Skills = () => {
         }
       },
       {
-        threshold: 0.2,
-        rootMargin: '50px'
+
+      threshold: isMobile ? 0.01 : 0.2,
+      rootMargin: isMobile ? '0px' : '50px'
       }
     );
 
