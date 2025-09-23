@@ -33,10 +33,10 @@ const SKILLS_DATA = [
     icon: <FaCode />,
     color: 'var(--hero-primary)',
     items: [
-      { name: 'Java (Spring Boot, JSF)', level: 95 },
-      { name: 'Python (FastAPI)', level: 90 },
-      { name: 'SQL (Oracle, MySQL)', level: 88 },
-      { name: 'JavaScript (JQuery, Angular)', level: 85 }
+      { name: 'Java (Spring Boot, JSF)', proficiency: "Expert", experience: "5 years", level: 95 },
+      { name: 'Python (FastAPI)', proficiency: "Advanced", experience: "5 years", level: 90 },
+      { name: 'SQL (Oracle, MySQL)', proficiency: "Proficient", experience: "5 years", level: 88 },
+      { name: 'JavaScript (JQuery, Angular)', proficiency: "Intermediate", experience: "5 years", level: 85 }
     ]
   },
   {
@@ -44,14 +44,14 @@ const SKILLS_DATA = [
     icon: <FaServer />,
     color: 'var(--hero-secondary)',
     items: [
-      { name: 'RabbitMQ', level: 85 },
-      { name: 'Redis', level: 88 },
-      { name: 'Firebase', level: 80 },
-      { name: 'Swagger & OpenAPI', level: 90 },
-      { name: 'JUnit & Mockito', level: 92 },
-      { name: 'Apache Camel', level: 78 },
-      { name: 'Liquibase', level: 82 },
-      { name: 'MapStruct', level: 80 }
+      { name: 'RabbitMQ', proficiency: "Advanced", experience: "5 years", level: 85 },
+      { name: 'Redis', proficiency: "Advanced", experience: "5 years", level: 88 },
+      { name: 'Firebase', proficiency: "Advanced", experience: "5 years", level: 80 },
+      { name: 'Swagger & OpenAPI', proficiency: "Advanced", experience: "5 years", level: 90 },
+      { name: 'JUnit & Mockito', proficiency: "Advanced", experience: "5 years", level: 92 },
+      { name: 'Apache Camel', proficiency: "Advanced", experience: "5 years", level: 78 },
+      { name: 'Liquibase', proficiency: "Advanced", experience: "5 years", level: 82 },
+      { name: 'MapStruct', proficiency: "Advanced", experience: "5 years", level: 80 }
     ]
   },
   {
@@ -59,13 +59,13 @@ const SKILLS_DATA = [
     icon: <FaTools />,
     color: 'var(--hero-accent)',
     items: [
-      { name: 'Docker', level: 90 },
-      { name: 'Git', level: 95 },
-      { name: 'Maven', level: 88 },
-      { name: 'Jira', level: 85 },
-      { name: 'Prometheus', level: 82 },
-      { name: 'Fluentd', level: 75 },
-      { name: 'Grafana', level: 80 }
+      { name: 'Docker', proficiency: "Advanced", experience: "5 years", level: 90 },
+      { name: 'Git', proficiency: "Advanced", experience: "5 years", level: 95 },
+      { name: 'Maven', proficiency: "Advanced", experience: "5 years", level: 88 },
+      { name: 'Jira', proficiency: "Advanced", experience: "5 years", level: 85 },
+      { name: 'Prometheus', proficiency: "Advanced", experience: "5 years", level: 82 },
+      { name: 'Fluentd', proficiency: "Advanced", experience: "5 years", level: 75 },
+      { name: 'Grafana', proficiency: "Advanced", experience: "5 years", level: 80 }
     ]
   },
   {
@@ -73,11 +73,11 @@ const SKILLS_DATA = [
     icon: <FaChartLine />,
     color: 'var(--hero-success)',
     items: [
-      { name: 'Spacy', level: 80 },
-      { name: 'NLTK', level: 78 },
-      { name: 'ArcGIS Pro', level: 85 },
-      { name: 'BeautifulSoup', level: 88 },
-      { name: 'Selenium', level: 82 }
+      { name: 'Spacy', proficiency: "Advanced", experience: "5 years", level: 80 },
+      { name: 'NLTK', proficiency: "Advanced", experience: "5 years", level: 78 },
+      { name: 'ArcGIS Pro', proficiency: "Advanced", experience: "5 years", level: 85 },
+      { name: 'BeautifulSoup', proficiency: "Advanced", experience: "5 years", level: 88 },
+      { name: 'Selenium', proficiency: "Advanced", experience: "5 years", level: 82 }
     ]
   },
   {
@@ -85,9 +85,9 @@ const SKILLS_DATA = [
     icon: <FaLaptopCode />,
     color: 'var(--hero-warning)',
     items: [
-      { name: 'IntelliJ', level: 95 },
-      { name: 'Eclipse', level: 88 },
-      { name: 'JBoss', level: 85 }
+      { name: 'IntelliJ', proficiency: "Advanced", experience: "5 years", level: 95 },
+      { name: 'Eclipse', proficiency: "Advanced", experience: "5 years", level: 88 },
+      { name: 'JBoss', proficiency: "Advanced", experience: "5 years", level: 85 }
     ]
   }
 ];

@@ -572,6 +572,7 @@
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
   .hero-container {
+    min-height: 90vh;
     flex-direction: column-reverse;
     text-align: center;
     justify-content: center;
