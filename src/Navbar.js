@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   FaHome,
   FaUser,
@@ -22,125 +22,93 @@ const NAV_ITEMS = [
 
 const Navbar = () => {
   const [active, setActive] = useState('#hero');
-  const isNavScrollRef = useRef(false);
-  const pendingHrefRef = useRef(null);
-  const lastScrollYRef = useRef(0);
-  const scrollDirectionRef = useRef('down');
-  const unlockTimerRef = useRef(null);
+  const [isScrolling, setIsScrolling] = useState(false);
 
-  // Track scroll direction for better section highlighting
+  // Use Intersection Observer with simpler logic
   useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      scrollDirectionRef.current = currentY > lastScrollYRef.current ? 'down' : 'up';
-      lastScrollYRef.current = currentY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Intersection observer for automatic section highlighting
-  useEffect(() => {
-    const sectionIds = NAV_ITEMS.map(item => item.href.slice(1));
-    const sections = sectionIds
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
-
-    if (!sections.length) return;
-
+    // Create intersection observer with generous margins
     const observer = new IntersectionObserver(
       (entries) => {
-        // Skip updates during programmatic scrolling
-        if (isNavScrollRef.current) return;
+        // Find the entry with the highest intersection ratio
+        let maxRatio = 0;
+        let activeEntry = null;
 
-        const visibleSections = entries
-          .filter(entry => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        entries.forEach(entry => {
+          if (entry.intersectionRatio > maxRatio) {
+            maxRatio = entry.intersectionRatio;
+            activeEntry = entry;
+          }
+        });
 
-        if (!visibleSections[0]?.target?.id) return;
-
-        const newHref = `#${visibleSections[0].target.id}`;
-        
-        // Only update if it's actually different
-        if (newHref !== active) {
-          setActive(newHref);
+        // If we found a visible section, update active
+        if (activeEntry && maxRatio > 0 && !isScrolling) {
+          const sectionId = activeEntry.target.id;
+          const href = `#${sectionId}`;
+          setActive(href);
         }
       },
-      { 
-        rootMargin: '-20% 0px -20% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1]
+      {
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        rootMargin: '-50% 0px -50% 0px'
       }
     );
 
-    sections.forEach(section => observer.observe(section));
-    
+    // Observe all sections
+    NAV_ITEMS.forEach(item => {
+      const element = document.getElementById(item.href.slice(1));
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
     return () => {
       observer.disconnect();
-      clearTimeout(unlockTimerRef.current);
     };
-  }, [active]);
+  }, [isScrolling]);
 
-  // Handle navigation clicks
+  // Handle navigation click
   const handleNavClick = useCallback((href) => (e) => {
-    const target = document.querySelector(href);
+    e.preventDefault();
+    const targetId = href.slice(1);
+    const target = document.getElementById(targetId);
+    
     if (!target) return;
 
-    e.preventDefault();
-
-    // Immediately update active state
     setActive(href);
+    setIsScrolling(true);
 
-    // Set scroll lock with longer duration
-    isNavScrollRef.current = true;
-    pendingHrefRef.current = href;
-
-    // Clear any existing unlock timer
-    clearTimeout(unlockTimerRef.current);
-
-    // Smooth scroll to section
+    // Scroll to section
     target.scrollIntoView({
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches 
-        ? 'auto' 
-        : 'smooth',
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
       block: 'start',
     });
 
-    // Set focus for accessibility
-    if (!target.hasAttribute('tabindex')) {
-      target.setAttribute('tabindex', '-1');
-    }
+    // Set focus
+    target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
 
-    // Unlock after scroll completes (longer timeout for long scrolls)
-    unlockTimerRef.current = setTimeout(() => {
-      isNavScrollRef.current = false;
-      pendingHrefRef.current = null;
-    }, 1500);
+    // Re-enable observer after scroll completes
+    setTimeout(() => {
+      setIsScrolling(false);
+    }, 2000);
   }, []);
 
   return (
-    <nav 
-      className="nav-rail" 
-      role="navigation" 
-      aria-label="Main navigation"
-    >
+    <nav className="nav-rail" role="navigation" aria-label="Main navigation">
       <ul className="nav-list">
         {NAV_ITEMS.map(({ href, icon, text }) => {
           const isActive = active === href;
           return (
-            <li key={href} className="nav-item">
+            <li key={href} className={`nav-item${isActive ? ' active' : ''}`}>
               <a
                 href={href}
                 className={`nav-link${isActive ? ' active' : ''}`}
-                aria-current={isActive ? 'page' : undefined}
+                aria-current={isActive ? 'true' : undefined}
                 onClick={handleNavClick(href)}
                 title={text}
                 aria-label={`Navigate to ${text} section`}
               >
-                <span className="icon" aria-hidden="true">
-                  {icon}
-                </span>
+                <span className="icon" aria-hidden="true">{icon}</span>
                 <span className="label">{text}</span>
               </a>
             </li>

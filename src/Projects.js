@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaGithub, FaExternalLinkAlt, FaRocket, FaChartLine, FaBroadcastTower } from 'react-icons/fa';
-import { SiPython, SiFastapi, SiPhp, SiLaravel, SiJquery, SiBootstrap } from 'react-icons/si';
+import { FaShieldAlt,
+  FaJava, FaGithub, FaPlane, FaRocket, FaChartLine, FaBroadcastTower,FaDesktop,FaDatabase } from 'react-icons/fa';
+import { SiPython, SiFastapi, SiPhp, SiLaravel, SiJquery, SiBootstrap,
+  SiCss3  } from 'react-icons/si';
 import SectionTitle from './components/SectionTitle';
 import './Projects.css';
 
@@ -13,7 +15,12 @@ const TECH_ICONS = {
   'PHP (Laravel)': <SiLaravel />,
   'jQuery': <SiJquery />,
   'Bootstrap': <SiBootstrap />,
-  'Dynamic Programming': <FaChartLine />
+  'Dynamic Programming': <FaChartLine />,
+  
+  'Java': <FaJava />,
+  'JavaFX': <FaDesktop />,
+  'CSS': <SiCss3 />,
+  'SQL Server': <FaDatabase />
 };
 
 const projects = [
@@ -29,7 +36,8 @@ const projects = [
     tech: ['Python', 'FastAPI', 'BeautifulSoup', 'Selenium', 'Optuna'],
     logo: './assets/realEstate.png',
     status: 'Completed',
-    year: '2024'
+    year: '2024',
+    github: 'https://github.com/mohamadnaji/Real-Estate-Web-Scraping-Lebanon' // Add your GitHub link here
   },
   {
     title: 'Base Station Configuration',
@@ -42,7 +50,37 @@ const projects = [
     tech: ['PHP (Laravel)', 'jQuery', 'Bootstrap', 'Dynamic Programming'],
     logo: './assets/RFS.png',
     status: 'Completed',
-    year: '2023'
+    year: '2019',
+    github: 'https://github.com/mohamadnaji/base_station' // Add your GitHub link here
+  },
+  {
+    title: 'Insurance Office Management System',
+    category: 'Software Development',
+    icon: <FaShieldAlt />,
+    description: [
+      'Built a desktop application using JavaFX and SQL Server to automate and manage insurance operations',
+      'Supports registration of agents, companies, and clients, along with management of insurance contracts and annual premium payments',
+      'Enhanced productivity through an intuitive user interface and streamlined data processing'
+    ],
+    tech: ['Java', 'JavaFX', 'CSS', 'SQL Server'],
+    logo: './assets/assurance.png',
+    status: 'Completed',
+    year: '2019',
+    github: 'https://github.com/mohamadnaji/assure-jfx' // Add your GitHub link here
+  },
+  {
+    title: 'Airline Reservation System',
+    category: 'Software Development',
+    icon: <FaPlane />,
+    description: [
+ 'Developed a university project to manage airline reservations, ticketing, and seat allocation with a user-friendly interface',
+ 'Enables airline staff to monitor flights, manage seat availability, and handle bookings efficiently, improving accuracy and customer experience.'
+    ],
+    tech: ['Java', 'JavaFX'],
+    logo: './assets/ARS.png',
+    status: 'Completed',
+    year: '2022',
+    github: 'https://github.com/mohamadnaji/Airplaine-System' // Add your GitHub link here
   }
 ];
 
@@ -168,10 +206,26 @@ const Projects = () => {
                   </ul>
                 </div>
 
-                <div className="project-status">
-                  <span className={`status-badge ${project.status.toLowerCase()}`}>
-                    {project.status}
-                  </span>
+                <div className="project-actions">
+                  <div className="project-status">
+                    <span className={`status-badge ${project.status.toLowerCase()}`}>
+                      {project.status}
+                    </span>
+                  </div>
+
+                  {project.github && (
+                    <a 
+                      href={project.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="github-link"
+                      aria-label={`View ${project.title} on GitHub`}
+                      title="View on GitHub"
+                    >
+                      <FaGithub />
+                      <span>Code</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

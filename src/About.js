@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SectionTitle from './components/SectionTitle.js';
 import './About.css';
-import profileImg from './assets/profile.png';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -51,7 +50,7 @@ const About = () => {
         <div className="about-image">
           <div className="image-wrapper">
             <img 
-              src={profileImg} 
+              src='./assets/profile2.jpg' 
               alt="Mohamad Naji - Full Stack Developer" 
               loading="lazy"
               draggable="false"

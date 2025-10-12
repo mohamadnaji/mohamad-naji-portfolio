@@ -27,16 +27,33 @@ const SKILL_ICONS = {
   'Prometheus': <SiPrometheus />
 };
 
+// Helper function to calculate proficiency level from percentage
+const getProficiencyFromPercentage = (level) => {
+  if (level >= 90) return 'Expert';
+  if (level >= 75) return 'Advanced';
+  if (level >= 60) return 'Proficient';
+  return 'Intermediate';
+};
+
+// Helper function to calculate experience from percentage (in years)
+const getExperienceFromPercentage = (level) => {
+  // Map proficiency to years: 60-74% = 2-3 years, 75-89% = 3-5 years, 90%+ = 5+ years
+  if (level >= 90) return '5+ years';
+  if (level >= 75) return '3-5 years';
+  if (level >= 60) return '2-3 years';
+  return '1-2 years';
+};
+
 const SKILLS_DATA = [
   {
     category: 'Core Languages & Frameworks',
     icon: <FaCode />,
     color: 'var(--hero-primary)',
     items: [
-      { name: 'Java (Spring Boot, JSF)', proficiency: "Expert", experience: "5 years", level: 95 },
-      { name: 'Python (FastAPI)', proficiency: "Advanced", experience: "5 years", level: 90 },
-      { name: 'SQL (Oracle, MySQL)', proficiency: "Proficient", experience: "5 years", level: 88 },
-      { name: 'JavaScript (JQuery, Angular)', proficiency: "Intermediate", experience: "5 years", level: 85 }
+      { name: 'Java (Spring Boot, JSF)', level: 95 },
+      { name: 'Python (FastAPI)', level: 85 },
+      { name: 'SQL (Oracle, MySQL)', level: 90 },
+      { name: 'JavaScript (JQuery, Angular, Vue)', level: 80 }
     ]
   },
   {
@@ -44,14 +61,13 @@ const SKILLS_DATA = [
     icon: <FaServer />,
     color: 'var(--hero-secondary)',
     items: [
-      { name: 'RabbitMQ', proficiency: "Advanced", experience: "5 years", level: 85 },
-      { name: 'Redis', proficiency: "Advanced", experience: "5 years", level: 88 },
-      { name: 'Firebase', proficiency: "Advanced", experience: "5 years", level: 80 },
-      { name: 'Swagger & OpenAPI', proficiency: "Advanced", experience: "5 years", level: 90 },
-      { name: 'JUnit & Mockito', proficiency: "Advanced", experience: "5 years", level: 92 },
-      { name: 'Apache Camel', proficiency: "Advanced", experience: "5 years", level: 78 },
-      { name: 'Liquibase', proficiency: "Advanced", experience: "5 years", level: 82 },
-      { name: 'MapStruct', proficiency: "Advanced", experience: "5 years", level: 80 }
+      { name: 'RabbitMQ', level: 80 },
+      { name: 'Redis', level: 80 },
+      { name: 'Firebase', level: 70 },
+      { name: 'Swagger & OpenAPI', level: 90 },
+      { name: 'JUnit & Mockito', level: 70 },
+      { name: 'Liquibase', level: 85 },
+      { name: 'MapStruct', level: 85 }
     ]
   },
   {
@@ -59,13 +75,13 @@ const SKILLS_DATA = [
     icon: <FaTools />,
     color: 'var(--hero-accent)',
     items: [
-      { name: 'Docker', proficiency: "Advanced", experience: "5 years", level: 90 },
-      { name: 'Git', proficiency: "Advanced", experience: "5 years", level: 95 },
-      { name: 'Maven', proficiency: "Advanced", experience: "5 years", level: 88 },
-      { name: 'Jira', proficiency: "Advanced", experience: "5 years", level: 85 },
-      { name: 'Prometheus', proficiency: "Advanced", experience: "5 years", level: 82 },
-      { name: 'Fluentd', proficiency: "Advanced", experience: "5 years", level: 75 },
-      { name: 'Grafana', proficiency: "Advanced", experience: "5 years", level: 80 }
+      { name: 'Docker', level: 85 },
+      { name: 'Git', level: 95 },
+      { name: 'Maven', level: 90 },
+      { name: 'Jira', level: 85 },
+      { name: 'Prometheus', level: 70 },
+      { name: 'Fluentd', level: 50 },
+      { name: 'Grafana', level: 50 }
     ]
   },
   {
@@ -73,11 +89,11 @@ const SKILLS_DATA = [
     icon: <FaChartLine />,
     color: 'var(--hero-success)',
     items: [
-      { name: 'Spacy', proficiency: "Advanced", experience: "5 years", level: 80 },
-      { name: 'NLTK', proficiency: "Advanced", experience: "5 years", level: 78 },
-      { name: 'ArcGIS Pro', proficiency: "Advanced", experience: "5 years", level: 85 },
-      { name: 'BeautifulSoup', proficiency: "Advanced", experience: "5 years", level: 88 },
-      { name: 'Selenium', proficiency: "Advanced", experience: "5 years", level: 82 }
+      { name: 'Spacy', level: 70 },
+      { name: 'NLTK', level: 70 },
+      { name: 'ArcGIS Pro', level: 75 },
+      { name: 'BeautifulSoup', level: 85 },
+      { name: 'Selenium', level: 80 }
     ]
   },
   {
@@ -85,9 +101,9 @@ const SKILLS_DATA = [
     icon: <FaLaptopCode />,
     color: 'var(--hero-warning)',
     items: [
-      { name: 'IntelliJ', proficiency: "Advanced", experience: "5 years", level: 95 },
-      { name: 'Eclipse', proficiency: "Advanced", experience: "5 years", level: 88 },
-      { name: 'JBoss', proficiency: "Advanced", experience: "5 years", level: 85 }
+      { name: 'IntelliJ', level: 95 },
+      { name: 'Eclipse', level: 85 },
+      { name: 'JBoss', level: 80 }
     ]
   }
 ];
@@ -100,7 +116,7 @@ const Skills = () => {
   const sectionRef = useRef(null);
 
   // Counter animation
-  const animateCounter = (target, key, duration = 2000) => {
+  const animateCounter = (target, key, duration = 1000) => {
     let start = 0;
     const increment = target / (duration / 16);
     
@@ -141,9 +157,8 @@ const Skills = () => {
         }
       },
       {
-
-      threshold: isMobile ? 0.01 : 0.2,
-      rootMargin: isMobile ? '0px' : '50px'
+        threshold: isMobile ? 0.01 : 0.2,
+        rootMargin: isMobile ? '0px' : '50px'
       }
     );
 
@@ -157,15 +172,16 @@ const Skills = () => {
   const getSkillDisplay = (skill, mode) => {
     switch (mode) {
       case 'experience':
-        return skill.experience;
+        return getExperienceFromPercentage(skill.level);
       case 'proficiency':
-        return skill.proficiency;
+        return getProficiencyFromPercentage(skill.level);
       default:
         return `${skill.level}%`;
     }
   };
 
-  const getProficiencyClass = (proficiency) => {
+  const getProficiencyClass = (level) => {
+    const proficiency = getProficiencyFromPercentage(level);
     switch (proficiency) {
       case 'Expert': return 'expert';
       case 'Advanced': return 'advanced';
@@ -256,6 +272,7 @@ const Skills = () => {
                 const skillKey = `${categoryIndex}-${skillIndex}`;
                 const isAnimated = animatedItems.has(skillKey);
                 const skillIcon = SKILL_ICONS[skill.name];
+                const proficiency = getProficiencyFromPercentage(skill.level);
                 
                 return (
                   <div key={skillIndex} className="skill-item">
@@ -269,7 +286,7 @@ const Skills = () => {
                         <span className="skill-name">{skill.name}</span>
                       </div>
                       <span 
-                        className={`skill-level ${skillDisplayMode === 'proficiency' ? getProficiencyClass(skill.proficiency) : ''}`}
+                        className={`skill-level ${skillDisplayMode === 'proficiency' ? getProficiencyClass(skill.level) : ''}`}
                       >
                         {getSkillDisplay(skill, skillDisplayMode)}
                       </span>
