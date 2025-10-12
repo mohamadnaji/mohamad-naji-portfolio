@@ -3,7 +3,7 @@
 .about-section {
   position: relative;
   margin-left: var(--sidebar-width, 0);
-  padding: 6rem 12%;
+  padding: 3rem 12%;
   min-height: 80vh;
   /* display: flex; */
   align-items: center;
@@ -75,7 +75,7 @@
 /* Image section */
 .about-image {
   flex: 1 1 40%;
-  max-width: 420px;
+  max-width: 380px;
   opacity: 0;
   transform: translateX(-50px) scale(0.95);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);

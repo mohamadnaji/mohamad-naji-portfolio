@@ -2,7 +2,7 @@
 
 .education-section {
   margin-left: var(--sidebar-width, 0);
-  padding: 6rem 12%;
+  padding: 3rem 12%;
   color: var(--color-text);
   position: relative;
   overflow: hidden;

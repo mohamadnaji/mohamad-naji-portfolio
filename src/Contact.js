@@ -49,6 +49,7 @@ const Contact = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
   const sectionRef = useRef(null);
   const formRef = useRef(null);
 
@@ -72,11 +73,69 @@ const Contact = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Validation function
+  const validateForm = (formData) => {
+    const newErrors = {};
+
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Subject validation
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'Subject is required';
+    } else if (formData.subject.trim().length < 3) {
+      newErrors.subject = 'Subject must be at least 3 characters';
+    }
+
+    // Message validation
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters';
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (isSubmitting) return;
+
+    // Get form data
+    const formData = {
+      name: formRef.current.name.value,
+      email: formRef.current.email.value,
+      subject: formRef.current.subject.value,
+      message: formRef.current.message.value
+    };
+
+    // Validate form
+    const newErrors = validateForm(formData);
     
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setFormStatus({ 
+        type: 'error', 
+        message: 'Please fill in all fields correctly.' 
+      });
+      return;
+    }
+
+    // Clear errors if validation passes
+    setErrors({});
     setIsSubmitting(true);
     setFormStatus({ type: 'loading', message: 'Sending your message...' });
 
@@ -93,6 +152,7 @@ const Contact = () => {
         message: 'Message sent successfully! I\'ll get back to you soon.' 
       });
       formRef.current.reset();
+      setErrors({});
     } catch (error) {
       setFormStatus({ 
         type: 'error', 
@@ -101,6 +161,16 @@ const Contact = () => {
     } finally {
       setIsSubmitting(false);
       setTimeout(() => setFormStatus({ type: '', message: '' }), 5000);
+    }
+  };
+
+  // Handle input change to clear errors
+  const handleInputChange = (fieldName) => {
+    if (errors[fieldName]) {
+      setErrors(prev => ({
+        ...prev,
+        [fieldName]: ''
+      }));
     }
   };
 
@@ -168,21 +238,27 @@ const Contact = () => {
                   <input
                     type="text"
                     name="name"
-                    placeholder="Your Name"
+                    placeholder="Your Name *"
                     required
                     aria-label="Your name"
                     disabled={isSubmitting}
+                    onChange={() => handleInputChange('name')}
+                    className={errors.name ? 'error' : ''}
                   />
+                  {errors.name && <span className="error-message">{errors.name}</span>}
                 </div>
                 <div className="form-group">
                   <input
                     type="email"
                     name="email"
-                    placeholder="Your Email"
+                    placeholder="Your Email *"
                     required
                     aria-label="Your email address"
                     disabled={isSubmitting}
+                    onChange={() => handleInputChange('email')}
+                    className={errors.email ? 'error' : ''}
                   />
+                  {errors.email && <span className="error-message">{errors.email}</span>}
                 </div>
               </div>
               
@@ -190,22 +266,28 @@ const Contact = () => {
                 <input
                   type="text"
                   name="subject"
-                  placeholder="Subject"
+                  placeholder="Subject *"
                   required
                   aria-label="Message subject"
                   disabled={isSubmitting}
+                  onChange={() => handleInputChange('subject')}
+                  className={errors.subject ? 'error' : ''}
                 />
+                {errors.subject && <span className="error-message">{errors.subject}</span>}
               </div>
               
               <div className="form-group">
                 <textarea
                   name="message"
-                  placeholder="Tell me about your project..."
+                  placeholder="Tell me about your project... *"
                   rows="5"
                   required
                   aria-label="Your message"
                   disabled={isSubmitting}
+                  onChange={() => handleInputChange('message')}
+                  className={errors.message ? 'error' : ''}
                 ></textarea>
+                {errors.message && <span className="error-message">{errors.message}</span>}
               </div>
 
               <button 
@@ -258,7 +340,7 @@ const Contact = () => {
           
           <div className="footer-links">
             <a 
-              href="https://github.com/yourusername" 
+              href="https://github.com/mohamadnaji" 
               target="_blank" 
               rel="noopener noreferrer"
               aria-label="Visit my GitHub profile"
