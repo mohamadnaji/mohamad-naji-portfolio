@@ -1,6 +1,6 @@
 // src/components/Hero.js
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { FaGithub, FaWhatsapp, FaLinkedinIn } from 'react-icons/fa';
+import { FaGithub, FaWhatsapp, FaLinkedinIn, FaTelegramPlane } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { TypeAnimation } from 'react-type-animation';
 import './Hero.css';
@@ -105,7 +105,7 @@ const Hero = () => {
         {/* Social Links */}
         <div className="hero-socials">
           <a
-            href="https://www.linkedin.com/in/yourusername"
+            href="https://www.linkedin.com/in/mohamad-naji-b84310174/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -113,7 +113,7 @@ const Hero = () => {
             <FaLinkedinIn />
           </a>
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com/mohamadnaji"
             target="_blank"
             className="git-icon"
             rel="noopener noreferrer"
@@ -122,7 +122,7 @@ const Hero = () => {
             <FaGithub />
           </a>
           <a
-            href="https://wa.me/yourphonenumber"
+            href="https://wa.me/15146062270"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
@@ -130,12 +130,12 @@ const Hero = () => {
             <FaWhatsapp />
           </a>
           <a
-            href="https://x.com/yourusername"
+            href="https://t.me/mohamadnaji1"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="X (Twitter)"
+            aria-label="Telegram"
           >
-            <FaXTwitter />
+            <FaTelegramPlane />
           </a>
         </div>
         <div className="hero-buttons">
