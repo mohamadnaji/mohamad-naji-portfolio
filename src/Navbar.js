@@ -7,17 +7,19 @@ import {
   FaFolderOpen,
   FaGraduationCap,
   FaEnvelope,
+  FaBriefcase
 } from 'react-icons/fa';
 import './Navbar.css';
 
 const NAV_ITEMS = [
   { href: '#hero', icon: <FaHome />, text: 'Home' },
   { href: '#about', icon: <FaUser />, text: 'About' },
+  { href: '#services', icon: <FaBriefcase />, text: 'Services' },
   { href: '#skills', icon: <FaStar />, text: 'Skills' },
   { href: '#experience', icon: <FaSuitcase />, text: 'Experience' },
   { href: '#projects', icon: <FaFolderOpen />, text: 'Projects' },
   { href: '#education', icon: <FaGraduationCap />, text: 'Education' },
-  { href: '#contact', icon: <FaEnvelope />, text: 'Contact' },
+  { href: '#contact', icon: <FaEnvelope />, text: 'Contact' }
 ];
 
 const Navbar = () => {

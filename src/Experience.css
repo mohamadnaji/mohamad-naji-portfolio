@@ -1,4 +1,4 @@
-/* ================= EXPERIENCE SECTION (ENHANCED) ================= */
+/* ================= EXPERIENCE SECTION (MOBILE OPTIMIZED) ================= */
 
 .experience-section {
   margin-left: var(--sidebar-width, 0);
@@ -140,10 +140,11 @@
   object-fit: contain;
   border-radius: var(--hero-border-radius-sm);
   background: #ffffff;
-  padding: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.01);
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: var(--hero-transition);
+  flex-shrink: 0;
 }
 
 .timeline-content:hover .company-logo {
@@ -153,6 +154,7 @@
 
 .company-details {
   flex: 1;
+  min-width: 0;
 }
 
 .job-title {
@@ -195,6 +197,7 @@
   flex-direction: column;
   gap: 0.5rem;
   align-items: flex-end;
+  flex-shrink: 0;
 }
 
 .job-info {
@@ -203,11 +206,13 @@
   gap: 0.5rem;
   color: var(--color-text-secondary);
   font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .job-info svg {
   color: var(--hero-primary);
   font-size: 0.8rem;
+  flex-shrink: 0;
 }
 
 /* Experience details */
@@ -272,7 +277,7 @@
 @media (max-width: 900px) {
   .experience-section {
     margin-left: 0;
-    padding: 3rem 8%;
+    padding: 3rem 6%;
   }
 
   .timeline {
@@ -280,17 +285,15 @@
   }
 
   .timeline::before {
-    left: 20px;
+    left: 15px;
   }
 
   .timeline-item {
-    padding-left: 60px;
+    padding-left: 50px;
   }
 
   .timeline-dot {
-    left: 9px;
-    width: 22px;
-    height: 22px;
+    left: 4px;
   }
 
   .experience-header {
@@ -300,6 +303,7 @@
   }
 
   .job-meta {
+    width: 100%;
     align-items: flex-start;
   }
 
@@ -310,52 +314,181 @@
 
 @media (max-width: 600px) {
   .experience-section {
-    padding: 3rem 5%;
+    padding: 2rem 4%;
+  }
+
+  .timeline::before {
+    left: 12px;
+  }
+
+  .timeline-item {
+    padding-left: 40px;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-dot {
+    left: 1px;
+    width: 20px;
+    height: 20px;
+    font-size: 0.65rem;
+    border-width: 2px;
   }
 
   .company-info {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    flex-direction: row;
+    align-items: flex-start;
     gap: 0.75rem;
   }
 
   .company-logo {
     width: 50px;
     height: 50px;
+    padding: 2px;
   }
 
   .job-title {
     font-size: 1.1rem;
+    word-wrap: break-word;
   }
 
   .company-name {
-    font-size: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .current-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .job-meta {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .job-info {
+    font-size: 0.85rem;
   }
 
   .timeline-content {
     padding: 1.25rem;
   }
 
+  .timeline-content:hover {
+    transform: translateY(-2px);
+  }
+
   .experience-details li {
     font-size: 0.9rem;
+    padding-left: 1.25rem;
+    margin-bottom: 0.6rem;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
+  .experience-section {
+    padding: 2rem 3%;
+  }
+
   .timeline-item {
-    padding-left: 50px;
+    padding-left: 35px;
   }
 
   .timeline::before {
-    left: 15px;
+    left: 10px;
   }
 
   .timeline-dot {
-    left: 4px;
-    width: 20px;
-    height: 20px;
+    left: -1px;
+    width: 18px;
+    height: 18px;
     font-size: 0.6rem;
+  }
+
+  .company-logo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .job-title {
+    font-size: 1rem;
+  }
+
+  .company-name {
+    font-size: 0.9rem;
+  }
+
+  .job-info {
+    font-size: 0.8rem;
+  }
+
+  .job-info svg {
+    font-size: 0.75rem;
+  }
+
+  .timeline-content {
+    padding: 1rem;
+  }
+
+  .experience-details li {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 360px) {
+  .experience-section {
+    padding: 1.5rem 3%;
+  }
+
+  .timeline-item {
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    left: 8px;
+  }
+
+  .timeline-dot {
+    left: -3px;
+    width: 16px;
+    height: 16px;
+    font-size: 0.55rem;
+  }
+
+  .company-info {
+    gap: 0.5rem;
+  }
+
+  .company-logo {
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+  }
+
+  .job-title {
+    font-size: 0.95rem;
+  }
+
+  .company-name {
+    font-size: 0.85rem;
+  }
+
+  .current-badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .timeline-content {
+    padding: 0.875rem;
+  }
+
+  .experience-details li {
+    font-size: 0.8rem;
+    padding-left: 1rem;
+  }
+
+  .experience-details li::before {
+    font-size: 0.8rem;
   }
 }
 
@@ -370,5 +503,10 @@
   .timeline-item,
   .timeline-content {
     transition-duration: 0.2s !important;
+  }
+  
+  .timeline-content:hover,
+  .experience-details li:hover {
+    transform: none !important;
   }
 }

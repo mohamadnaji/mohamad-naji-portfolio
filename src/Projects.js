@@ -37,7 +37,7 @@ const projects = [
     logo: './assets/realEstate.png',
     status: 'Completed',
     year: '2024',
-    github: 'https://github.com/mohamadnaji/Real-Estate-Web-Scraping-Lebanon' // Add your GitHub link here
+    github: 'https://github.com/mohamadnaji/Real-Estate-Web-Scraping-Lebanon'
   },
   {
     title: 'Base Station Configuration',
@@ -51,7 +51,7 @@ const projects = [
     logo: './assets/RFS.png',
     status: 'Completed',
     year: '2019',
-    github: 'https://github.com/mohamadnaji/base_station' // Add your GitHub link here
+    github: 'https://github.com/mohamadnaji/base_station'
   },
   {
     title: 'Insurance Office Management System',
@@ -66,27 +66,28 @@ const projects = [
     logo: './assets/assurance.png',
     status: 'Completed',
     year: '2019',
-    github: 'https://github.com/mohamadnaji/assure-jfx' // Add your GitHub link here
+    github: 'https://github.com/mohamadnaji/assure-jfx'
   },
   {
     title: 'Airline Reservation System',
     category: 'Software Development',
     icon: <FaPlane />,
     description: [
- 'Developed a university project to manage airline reservations, ticketing, and seat allocation with a user-friendly interface',
- 'Enables airline staff to monitor flights, manage seat availability, and handle bookings efficiently, improving accuracy and customer experience.'
+      'Developed a university project to manage airline reservations, ticketing, and seat allocation with a user-friendly interface',
+      'Enables airline staff to monitor flights, manage seat availability, and handle bookings efficiently, improving accuracy and customer experience.'
     ],
     tech: ['Java', 'JavaFX'],
     logo: './assets/ARS.png',
     status: 'Completed',
     year: '2022',
-    github: 'https://github.com/mohamadnaji/Airplaine-System' // Add your GitHub link here
+    github: 'https://github.com/mohamadnaji/Airplaine-System'
   }
 ];
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const sectionRef = useRef(null);
 
   // Get unique categories from projects
@@ -97,6 +98,16 @@ const Projects = () => {
     ? projects 
     : projects.filter(project => project.category === activeFilter);
 
+  // Handle responsive behavior
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -105,8 +116,8 @@ const Projects = () => {
         }
       },
       {
-        threshold: 0.2,
-        rootMargin: '50px'
+        threshold: isMobile ? 0.1 : 0.2,
+        rootMargin: isMobile ? '0px' : '50px'
       }
     );
 
@@ -115,7 +126,7 @@ const Projects = () => {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile]);
 
   const handleFilterChange = (category) => {
     setActiveFilter(category);
@@ -135,9 +146,6 @@ const Projects = () => {
 
       {/* Category Filter */}
       <div className="project-filters">
-        {/* <div className="filter-label">
-          <span>Filter by category:</span>
-        </div> */}
         <div className="filter-buttons">
           {categories.map((category) => (
             <button
@@ -170,6 +178,7 @@ const Projects = () => {
                   src={project.logo}
                   alt={`${project.title} logo`}
                   className="project-logo"
+                  loading="lazy"
                 />
                 <div className="project-icon" aria-hidden="true">
                   {project.icon}

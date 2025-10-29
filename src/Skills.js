@@ -57,17 +57,14 @@ const SKILLS_DATA = [
     ]
   },
   {
-    category: 'Backend & API Tools',
-    icon: <FaServer />,
-    color: 'var(--hero-secondary)',
+    category: 'IDEs & Platforms',
+    icon: <FaLaptopCode />,
+    color: 'var(--hero-warning)',
     items: [
-      { name: 'RabbitMQ', level: 80 },
-      { name: 'Redis', level: 80 },
-      { name: 'Firebase', level: 70 },
-      { name: 'Swagger & OpenAPI', level: 90 },
-      { name: 'JUnit & Mockito', level: 70 },
-      { name: 'Liquibase', level: 85 },
-      { name: 'MapStruct', level: 85 }
+      { name: 'IntelliJ', level: 95 },
+      { name: 'Eclipse', level: 85 },
+      { name: 'JBoss', level: 80 },
+      { name: 'VS Code', level: 90 }
     ]
   },
   {
@@ -78,10 +75,20 @@ const SKILLS_DATA = [
       { name: 'Docker', level: 85 },
       { name: 'Git', level: 95 },
       { name: 'Maven', level: 90 },
-      { name: 'Jira', level: 85 },
-      { name: 'Prometheus', level: 70 },
-      { name: 'Fluentd', level: 50 },
-      { name: 'Grafana', level: 50 }
+      { name: 'Jira', level: 85 }
+    ]
+  },
+  {
+    category: 'Backend & API Tools',
+    icon: <FaServer />,
+    color: 'var(--hero-secondary)',
+    items: [
+      { name: 'RabbitMQ', level: 80 },
+      { name: 'Redis', level: 80 },
+      { name: 'Firebase', level: 70 },
+      { name: 'Swagger & OpenAPI', level: 90 },
+      { name: 'JUnit & Mockito', level: 70 },
+      { name: 'Liquibase', level: 85 }
     ]
   },
   {
@@ -94,16 +101,6 @@ const SKILLS_DATA = [
       { name: 'ArcGIS Pro', level: 75 },
       { name: 'BeautifulSoup', level: 85 },
       { name: 'Selenium', level: 80 }
-    ]
-  },
-  {
-    category: 'IDEs & Platforms',
-    icon: <FaLaptopCode />,
-    color: 'var(--hero-warning)',
-    items: [
-      { name: 'IntelliJ', level: 95 },
-      { name: 'Eclipse', level: 85 },
-      { name: 'JBoss', level: 80 }
     ]
   }
 ];
@@ -227,7 +224,7 @@ const Skills = () => {
 
       {/* Display mode toggle */}
       <div className="skill-display-toggle">
-        <span>View skills by:</span>
+        {/* <span>View skills by:</span> */}
         <div className="toggle-buttons">
           <button 
             className={skillDisplayMode === 'percentage' ? 'active' : ''}

@@ -12,6 +12,7 @@ import Experience from './Experience';
 import Projects from './Projects';
 import Education from './Education';
 import Contact from './Contact';
+import Services from './Services';
 
 // Styles
 import './App.css';
@@ -54,6 +55,10 @@ export default function App() {
 
         <section id="about" className="section" aria-labelledby="about-title">
           <About />
+        </section>
+
+        <section id="services" className="section" aria-labelledby="services-title">
+          <Services />
         </section>
 
         <section id="skills" className="section" aria-labelledby="skills-title">
