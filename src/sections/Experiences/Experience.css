@@ -140,7 +140,7 @@
   object-fit: contain;
   border-radius: var(--hero-border-radius-sm);
   background: #ffffff;
-  padding: 8px;
+  padding: 2px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: var(--hero-transition);
@@ -462,7 +462,7 @@
   .company-logo {
     width: 40px;
     height: 40px;
-    padding: 4px;
+    padding: 2px;
   }
 
   .job-title {

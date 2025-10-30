@@ -2,17 +2,17 @@
 import React, { useEffect, useCallback } from 'react';
 
 // Components
-import Navbar from './Navbar';
-import MobileNavbar from './MobileNavbar';
-import ThemeToggle from './ThemeToggle';
-import Hero from './Hero';
-import About from './About';
-import Skills from './Skills';
-import Experience from './Experience';
-import Projects from './Projects';
-import Education from './Education';
-import Contact from './Contact';
-import Services from './Services';
+import Navbar from './components/common/Navbar/Navbar';
+import MobileNavbar from './components/common/MobileNavbar/MobileNavbar';
+import ThemeToggle from './components/common/ThemeToggle/ThemeToggle';
+import Hero from './sections/Hero/Hero';
+import About from './sections/About/About';
+import Skills from './sections/Skills/Skills';
+import Experience from './sections/Experiences/Experience';
+import Projects from './sections/Projects/Projects';
+import Education from './sections/Educations/Education';
+import Contact from './sections/Contact/Contact';
+import Services from './sections/Services/Services';
 
 // Styles
 import './App.css';

@@ -42,7 +42,7 @@
 }
 
 /* Expand on hover (desktop only) */
-@media (hover: hover) and (min-width: 801px) {
+@media (hover: hover) and (min-width: 901px) {
   .nav-rail:hover,
   .nav-rail:focus-within {
     width: var(--rail-expanded);
@@ -157,7 +157,7 @@
 }
 
 /* Hide on mobile (as requested) */
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .nav-rail {
     display: none;
   }

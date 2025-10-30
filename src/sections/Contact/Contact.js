@@ -11,7 +11,7 @@ import {
   FaGithub,
   FaHeart
 } from 'react-icons/fa';
-import SectionTitle from './components/SectionTitle';
+import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Contact.css';
 
 const CONTACT_INFO = [

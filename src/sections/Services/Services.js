@@ -8,7 +8,7 @@ import {
   FaCheckCircle,
   FaArrowRight
 } from 'react-icons/fa';
-import SectionTitle from './components/SectionTitle';
+import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Services.css';
 
 const SERVICES = [

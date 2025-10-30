@@ -13,7 +13,7 @@ import {
   FaChevronRight
 } from 'react-icons/fa';
 import './MobileNavbar.css';
-import logo from './assets/logo.png';
+import logo from '../../../assets/logo.png';
 
 const NAV_ITEMS = [
   { 

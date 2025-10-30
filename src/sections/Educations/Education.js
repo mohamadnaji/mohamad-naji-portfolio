@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaGraduationCap, FaCalendarAlt, FaMapMarkerAlt, FaAward } from 'react-icons/fa';
-import SectionTitle from './components/SectionTitle';
+import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Education.css';
+import ulLogo from '../../assets/educations/ul.png';
+
 
 const education = [
   {
@@ -14,7 +16,7 @@ const education = [
     details: [
       'Relevant courses: Python, Deep Learning, Big Data, NLP, Remote Sensing, Geodatabase, Spatial Analysis'
     ],
-    logo: '/assets/ul.png',
+    logo: ulLogo,
     current: false
   },
   {
@@ -27,7 +29,7 @@ const education = [
     details: [
       'Relevant courses: Java, PHP, Design Patterns, Data Structures, Database, Operating Systems, Parallel Programming, System Administration'
     ],
-    logo: '/assets/ul.png',
+    logo: ulLogo,
     current: false
   }
 ];

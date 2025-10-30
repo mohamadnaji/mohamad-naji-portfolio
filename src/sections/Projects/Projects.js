@@ -3,8 +3,13 @@ import { FaShieldAlt,
   FaJava, FaGithub, FaPlane, FaRocket, FaChartLine, FaBroadcastTower,FaDesktop,FaDatabase } from 'react-icons/fa';
 import { SiPython, SiFastapi, SiPhp, SiLaravel, SiJquery, SiBootstrap,
   SiCss3  } from 'react-icons/si';
-import SectionTitle from './components/SectionTitle';
+import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Projects.css';
+
+import arsLogo from '../../assets/projects/ARS.png';
+import rfsLogo from '../../assets/projects/RFS.png';
+import assuranceLogo from '../../assets/projects/assurance.png';
+import realEstateLogo from '../../assets/projects/realEstate.png';
 
 const TECH_ICONS = {
   'Python': <SiPython />,
@@ -34,7 +39,7 @@ const projects = [
       'Applied Optuna for hyperparameter tuning and model optimization.'
     ],
     tech: ['Python', 'FastAPI', 'BeautifulSoup', 'Selenium', 'Optuna'],
-    logo: './assets/realEstate.png',
+    logo: realEstateLogo,
     status: 'Completed',
     year: '2024',
     github: 'https://github.com/mohamadnaji/Real-Estate-Web-Scraping-Lebanon'
@@ -48,7 +53,7 @@ const projects = [
       'Optimized antenna filtration with dynamic programming, reducing computation by 99.57%.'
     ],
     tech: ['PHP (Laravel)', 'jQuery', 'Bootstrap', 'Dynamic Programming'],
-    logo: './assets/RFS.png',
+    logo: rfsLogo,
     status: 'Completed',
     year: '2019',
     github: 'https://github.com/mohamadnaji/base_station'
@@ -63,7 +68,7 @@ const projects = [
       'Enhanced productivity through an intuitive user interface and streamlined data processing'
     ],
     tech: ['Java', 'JavaFX', 'CSS', 'SQL Server'],
-    logo: './assets/assurance.png',
+    logo: assuranceLogo,
     status: 'Completed',
     year: '2019',
     github: 'https://github.com/mohamadnaji/assure-jfx'
@@ -77,7 +82,7 @@ const projects = [
       'Enables airline staff to monitor flights, manage seat availability, and handle bookings efficiently, improving accuracy and customer experience.'
     ],
     tech: ['Java', 'JavaFX'],
-    logo: './assets/ARS.png',
+    logo: arsLogo,
     status: 'Completed',
     year: '2022',
     github: 'https://github.com/mohamadnaji/Airplaine-System'

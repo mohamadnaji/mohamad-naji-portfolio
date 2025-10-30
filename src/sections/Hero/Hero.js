@@ -1,10 +1,9 @@
 // src/components/Hero.js
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { FaGithub, FaWhatsapp, FaLinkedinIn, FaTelegramPlane } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
 import { TypeAnimation } from 'react-type-animation';
 import './Hero.css';
-import profileImg from './assets/profile.png';
+import profileImg from '../../assets/hero/profile-hero.png';
 
 const symbols = ["{}", "</>", "()", "!=", ";", "[]", "/* */", "==", "if", "else", "01", "&&", "||", "sysout", "<>", "<!-- -->", "++", "--", "return"];
 

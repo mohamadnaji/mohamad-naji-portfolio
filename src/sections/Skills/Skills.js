@@ -13,7 +13,7 @@ import {
   FaGitAlt
 } from 'react-icons/fa';
 import { SiSpring, SiRedis, SiPrometheus } from 'react-icons/si';
-import SectionTitle from './components/SectionTitle';
+import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Skills.css';
 
 const SKILL_ICONS = {

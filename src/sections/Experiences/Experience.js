@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaBriefcase } from 'react-icons/fa';
-import SectionTitle from './components/SectionTitle';
+import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Experience.css';
+import nakisaLogo from '../../assets/experiences/nakisa.png';
+import cbsLogo from '../../assets/experiences/cbs.png';
+import montyLogo from '../../assets/experiences/mymonty.png';
+import citsLogo from '../../assets/experiences/cits.png';
 
 const experience = [
   {
@@ -10,7 +14,7 @@ const experience = [
     date: 'May 2025 – Present',
     location: 'Montreal, QC, Canada',
     type: 'Full-time',
-    logo: './assets/nakisa.png',
+    logo: nakisaLogo,
     current: true,
     details: [
       'Finance Department – building and maintaining financial applications.',
@@ -25,7 +29,7 @@ const experience = [
     date: 'Nov 2022 – Jun 2025',
     location: 'Remote',
     type: 'Contract',
-    logo: './assets/mymonty.png',
+    logo: montyLogo,
     current: false,
     details: [
       'Created 30+ RESTful APIs with Java Spring Boot, OpenAPI, and Swagger.',
@@ -41,7 +45,7 @@ const experience = [
     date: 'Oct 2021 – Oct 2022',
     location: 'Lebanon',
     type: 'Full-time',
-    logo: './assets/cbs.png',
+    logo: cbsLogo,
     current: false,
     details: [
       'Developed enterprise APIs using Oracle ADF and Spring Boot.',
@@ -55,7 +59,7 @@ const experience = [
     date: 'Nov 2019 – Aug 2021',
     location: 'Lebanon',
     type: 'Full-time',
-    logo: './assets/cits.png',
+    logo: citsLogo,
     current: false,
     details: [
       'Delivered banking solutions for Banque du Liban, Al Rajhi Bank, and others.',

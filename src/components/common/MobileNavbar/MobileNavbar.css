@@ -1,13 +1,13 @@
 /* ================= MODERN MOBILE NAVBAR ================= */
 
 /* Hide on desktop */
-@media (min-width: 801px) {
+@media (min-width: 901px) {
   .mobile-nav-wrapper { 
     display: none; 
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .mobile-nav-wrapper {
     position: fixed;
     z-index: 9999;

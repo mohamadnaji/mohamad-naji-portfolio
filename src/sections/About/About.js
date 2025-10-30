@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import SectionTitle from './components/SectionTitle.js';
+import SectionTitle from '../../components/common/Section/SectionTitle.js';
 import './About.css';
-import profileImg from './assets/profile2.png';
+import profileImg from '../../assets/about/profile-about.png';
 
 
 const About = () => {
