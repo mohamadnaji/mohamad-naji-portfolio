@@ -6,6 +6,7 @@
   color: var(--color-text);
   position: relative;
   overflow: hidden;
+  min-height: 600px; /* Ensure section has height for mobile */
 }
 
 /* Background decoration */
@@ -39,10 +40,17 @@
   animation-delay: 10s;
 }
 
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(30px, -30px); }
+  66% { transform: translate(-20px, 20px); }
+}
+
 /* Services Grid */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  /* IMPROVED: Better mobile support with smaller minimum */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto 4rem;
@@ -332,15 +340,15 @@
 /* Responsive design */
 @media (max-width: 1200px) {
   .services-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.75rem;
   }
 }
 
 @media (max-width: 900px) {
   .services-section {
-    margin-left: 0;
-    padding: 4rem 6%;
+    margin-left: 0; /* Remove sidebar margin on mobile */
+    padding: 3.5rem 6%;
   }
 
   .services-grid {
@@ -355,6 +363,8 @@
   }
 
   .services-grid {
+    /* IMPROVED: Force single column on mobile */
+    grid-template-columns: 1fr !important;
     gap: 1.25rem;
   }
 
@@ -415,6 +425,14 @@
   .service-title {
     font-size: 1.1rem;
   }
+
+  .service-features {
+    margin-bottom: 1rem;
+  }
+
+  .service-feature-item {
+    margin-bottom: 0.65rem;
+  }
 }
 
 /* Reduced motion */
@@ -423,8 +441,11 @@
   .service-icon-wrapper,
   .service-feature-item,
   .service-link,
-  .cta-button {
-    transition-duration: 0.2s !important;
+  .cta-button,
+  .services-grid,
+  .services-cta {
+    transition-duration: 0.05s !important;
+    animation: none !important;
   }
 
   .service-card:hover,
@@ -435,4 +456,22 @@
   .service-particle {
     animation: none !important;
   }
+
+  .services-section.animate-in .services-grid,
+  .services-section.animate-in .service-card,
+  .services-section.animate-in .services-cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Accessibility - Focus styles */
+.cta-button:focus-visible {
+  outline: 3px solid var(--hero-primary);
+  outline-offset: 3px;
+}
+
+.service-card:focus-visible {
+  outline: 2px solid var(--service-color);
+  outline-offset: 4px;
 }

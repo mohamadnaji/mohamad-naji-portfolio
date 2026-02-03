@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { 
-  FaCode, 
-  FaServer, 
-  FaTools, 
-  FaChartLine, 
+import {
+  FaCode,
+  FaServer,
+  FaTools,
+  FaChartLine,
   FaLaptopCode,
   FaJava,
   FaPython,
@@ -12,304 +12,251 @@ import {
   FaDocker,
   FaGitAlt
 } from 'react-icons/fa';
-import { SiSpring, SiRedis, SiPrometheus } from 'react-icons/si';
+import { SiRedis, SiPrometheus } from 'react-icons/si';
 import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Skills.css';
 
+/* ==========================================
+ * CONSTANTS & CONFIGURATION
+ * ========================================== */
+
 const SKILL_ICONS = {
-  'Java (Spring Boot, JSF)': <FaJava />,
-  'Python (FastAPI)': <FaPython />,
-  'SQL (Oracle, MySQL)': <FaDatabase />,
-  'JavaScript (JQuery, Angular)': <FaJs />,
-  'Docker': <FaDocker />,
-  'Git': <FaGitAlt />,
-  'Redis': <SiRedis />,
-  'Prometheus': <SiPrometheus />
+  'Java (Spring Boot, JSF)': FaJava,
+  'Python (FastAPI)': FaPython,
+  'SQL (Oracle, MySQL)': FaDatabase,
+  'JavaScript (Vue)': FaJs,
+  'Docker': FaDocker,
+  'Git': FaGitAlt,
+  'Redis': SiRedis,
+  'Prometheus': SiPrometheus
 };
 
-// Helper function to calculate proficiency level from percentage
-const getProficiencyFromPercentage = (level) => {
-  if (level >= 90) return 'Expert';
-  if (level >= 75) return 'Advanced';
-  if (level >= 60) return 'Proficient';
-  return 'Intermediate';
-};
-
-// Helper function to calculate experience from percentage (in years)
-const getExperienceFromPercentage = (level) => {
-  // Map proficiency to years: 60-74% = 2-3 years, 75-89% = 3-5 years, 90%+ = 5+ years
-  if (level >= 90) return '5+ years';
-  if (level >= 75) return '3-5 years';
-  if (level >= 60) return '2-3 years';
-  return '1-2 years';
+const PROFICIENCY_CONFIG = {
+  expert: { min: 90, label: 'Expert', className: 'expert' },
+  advanced: { min: 75, label: 'Advanced', className: 'advanced' },
+  proficient: { min: 60, label: 'Proficient', className: 'proficient' },
+  intermediate: { min: 0, label: 'Intermediate', className: 'intermediate' }
 };
 
 const SKILLS_DATA = [
   {
-    category: 'Core Languages & Frameworks',
-    icon: <FaCode />,
+    title: 'Core Languages',
+    icon: FaCode,
     color: 'var(--hero-primary)',
-    items: [
-      { name: 'Java (Spring Boot, JSF)', level: 95 },
-      { name: 'Python (FastAPI)', level: 85 },
-      { name: 'SQL (Oracle, MySQL)', level: 90 },
-      { name: 'JavaScript (JQuery, Angular, Vue)', level: 80 }
+    skills: [
+      { name: 'Java (Spring Boot, JSF)', level: 95, years: '7+ years' },
+      { name: 'SQL (Oracle, MySQL)', level: 90, years: '7+ years' },
+      { name: 'JavaScript (Vue)', level: 80, years: '3 years' },
+      { name: 'Python (FastAPI)', level: 70, years: '2 years' }
     ]
   },
   {
-    category: 'IDEs & Platforms',
-    icon: <FaLaptopCode />,
+    title: 'IDEs & Platforms',
+    icon: FaLaptopCode,
     color: 'var(--hero-warning)',
-    items: [
-      { name: 'IntelliJ', level: 95 },
-      { name: 'Eclipse', level: 85 },
-      { name: 'JBoss', level: 80 },
-      { name: 'VS Code', level: 90 }
+    skills: [
+      { name: 'IntelliJ', level: 95, years: '5 years' },
+      { name: 'VS Code', level: 90, years: '4 years' },
+      { name: 'Eclipse', level: 80, years: '3 years' },
+      { name: 'JBoss', level: 70, years: '2 years' }
     ]
   },
   {
-    category: 'DevOps & Monitoring',
-    icon: <FaTools />,
+    title: 'DevOps & Monitoring',
+    icon: FaTools,
     color: 'var(--hero-accent)',
-    items: [
-      { name: 'Docker', level: 85 },
-      { name: 'Git', level: 95 },
-      { name: 'Maven', level: 90 },
-      { name: 'Jira', level: 85 }
+    skills: [
+      { name: 'Git', level: 95, years: '7+ years' },
+      { name: 'Maven', level: 90, years: '7+ years' },
+      { name: 'Jira', level: 90, years: '7+ years' },
+      { name: 'Docker', level: 80, years: '3 years' }
     ]
   },
   {
-    category: 'Backend & API Tools',
-    icon: <FaServer />,
+    title: 'Backend & API Tools',
+    icon: FaServer,
     color: 'var(--hero-secondary)',
-    items: [
-      { name: 'RabbitMQ', level: 80 },
-      { name: 'Redis', level: 80 },
-      { name: 'Firebase', level: 70 },
-      { name: 'Swagger & OpenAPI', level: 90 },
-      { name: 'JUnit & Mockito', level: 70 },
-      { name: 'Liquibase', level: 85 }
+    skills: [
+      { name: 'Swagger & OpenAPI', level: 85, years: '3 years' },
+      { name: 'Liquibase', level: 85, years: '3 years' },
+      { name: 'RabbitMQ', level: 80, years: '3 years' },
+      { name: 'JUnit & Mockito', level: 80, years: '3 years' },
+      { name: 'Redis', level: 70, years: '2 years' },
+      { name: 'Firebase', level: 70, years: '1 year' }
     ]
   },
   {
-    category: 'Data Science & GIS',
-    icon: <FaChartLine />,
+    title: 'Data Science & GIS',
+    icon: FaChartLine,
     color: 'var(--hero-success)',
-    items: [
-      { name: 'Spacy', level: 70 },
-      { name: 'NLTK', level: 70 },
-      { name: 'ArcGIS Pro', level: 75 },
-      { name: 'BeautifulSoup', level: 85 },
-      { name: 'Selenium', level: 80 }
+    skills: [
+      { name: 'BeautifulSoup', level: 80, years: '2 years' },
+      { name: 'Selenium', level: 80, years: '2 years' },
+      { name: 'ArcGIS Pro', level: 70, years: '1 year' },
+      { name: 'Spacy', level: 70, years: '2 years' },
+      { name: 'NLTK', level: 70, years: '2 years' }
     ]
   }
 ];
 
-const Skills = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [animatedItems, setAnimatedItems] = useState(new Set());
-  const [counters, setCounters] = useState({ years: 0, technologies: 0 });
-  const [skillDisplayMode, setSkillDisplayMode] = useState('percentage'); // 'percentage', 'experience', 'proficiency'
-  const sectionRef = useRef(null);
+/* ==========================================
+ * HELPER FUNCTIONS
+ * ========================================== */
 
-  // Counter animation
-  const animateCounter = (target, key, duration = 1000) => {
-    let start = 0;
-    const increment = target / (duration / 16);
-    
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCounters(prev => ({ ...prev, [key]: target }));
-        clearInterval(timer);
-      } else {
-        setCounters(prev => ({ ...prev, [key]: Math.floor(start) }));
-      }
-    }, 16);
-  };
+const getProficiency = (level) => {
+  const entry = Object.values(PROFICIENCY_CONFIG).find(
+    (config) => level >= config.min
+  );
+  return entry || PROFICIENCY_CONFIG.intermediate;
+};
+
+const sortSkillsByLevel = (skills) => {
+  return [...skills].sort((a, b) => b.level - a.level);
+};
+
+/* ==========================================
+ * SUB-COMPONENTS
+ * ========================================== */
+
+const DisplayModeToggle = ({ displayMode, onModeChange }) => (
+  <div className="skill-display-toggle">
+    <button
+      className={displayMode === 'experience' ? 'active' : ''}
+      onClick={() => onModeChange('experience')}
+      aria-pressed={displayMode === 'experience'}
+    >
+      Experience
+    </button>
+    <button
+      className={displayMode === 'level' ? 'active' : ''}
+      onClick={() => onModeChange('level')}
+      aria-pressed={displayMode === 'level'}
+    >
+      Proficiency
+    </button>
+  </div>
+);
+
+const SkillItem = ({ skill, displayMode }) => {
+  const proficiency = getProficiency(skill.level);
+  const SkillIcon = SKILL_ICONS[skill.name];
+  const displayValue =
+    displayMode === 'experience'
+      ? skill.years
+      : proficiency.label;
+
+  return (
+    <li className="skill-item">
+      <div className="skill-info">
+        {SkillIcon && (
+          <span className="skill-icon" aria-hidden="true">
+            <SkillIcon />
+          </span>
+        )}
+        <span className="skill-name">{skill.name}</span>
+      </div>
+      <span className={`skill-level ${proficiency.className}`}>
+        {displayValue}
+      </span>
+    </li>
+  );
+};
+
+const SkillGroup = ({ group, displayMode }) => {
+  const CategoryIcon = group.icon;
+  const sortedSkills = sortSkillsByLevel(group.skills);
+
+  return (
+    <div
+      className="skills-group"
+      style={{ '--category-color': group.color }}
+    >
+      <header className="category-header">
+        <span className="category-icon" aria-hidden="true">
+          <CategoryIcon />
+        </span>
+        <h3>{group.title}</h3>
+      </header>
+
+      <ul className="skills-list">
+        {sortedSkills.map((skill) => (
+          <SkillItem
+            key={skill.name}
+            skill={skill}
+            displayMode={displayMode}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+/* ==========================================
+ * MAIN COMPONENT
+ * ========================================== */
+
+const Skills = () => {
+  const sectionRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [displayMode, setDisplayMode] = useState('experience');
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 600;
+    // Lower threshold for mobile and add rootMargin for earlier triggering
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          
-          // Start counters
-          setTimeout(() => {
-            animateCounter(7, 'years', 2000);
-            animateCounter(30, 'technologies', 2500);
-          }, 300);
-
-          // Animate skill bars with stagger
-          setTimeout(() => {
-            SKILLS_DATA.forEach((category, categoryIndex) => {
-              category.items.forEach((skill, skillIndex) => {
-                setTimeout(() => {
-                  setAnimatedItems(prev => new Set([...prev, `${categoryIndex}-${skillIndex}`]));
-                }, (categoryIndex * 200) + (skillIndex * 100));
-              });
-            });
-          }, 800);
+          setVisible(true);
         }
       },
-      {
-        threshold: isMobile ? 0.01 : 0.2,
-        rootMargin: isMobile ? '0px' : '50px'
+      { 
+        threshold: 0.1,  // Reduced from 0.2 for mobile
+        rootMargin: '50px' // Trigger 50px before element comes into view
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
-    return () => observer.disconnect();
-  }, []);
+    // Fallback: Set visible after a delay if IntersectionObserver doesn't trigger
+    const fallbackTimer = setTimeout(() => {
+      if (!visible) {
+        setVisible(true);
+      }
+    }, 1000);
 
-  const getSkillDisplay = (skill, mode) => {
-    switch (mode) {
-      case 'experience':
-        return getExperienceFromPercentage(skill.level);
-      case 'proficiency':
-        return getProficiencyFromPercentage(skill.level);
-      default:
-        return `${skill.level}%`;
-    }
-  };
-
-  const getProficiencyClass = (level) => {
-    const proficiency = getProficiencyFromPercentage(level);
-    switch (proficiency) {
-      case 'Expert': return 'expert';
-      case 'Advanced': return 'advanced';
-      case 'Proficient': return 'proficient';
-      default: return 'intermediate';
-    }
-  };
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+      clearTimeout(fallbackTimer);
+    };
+  }, [visible]);
 
   return (
-    <section 
-      className={`skills-section ${isVisible ? 'animate-in' : ''}`} 
-      id="skills"
+    <section
       ref={sectionRef}
-      role="region"
-      aria-label="Technical skills and expertise"
+      id="skills"
+      className={`skills-section ${visible ? 'animate-in' : ''}`}
+      aria-labelledby="skills-title"
     >
-      {/* Background decoration */}
-      <div className="skills-bg-decoration" aria-hidden="true">
-        <div className="skill-particle"></div>
-        <div className="skill-particle"></div>
-        <div className="skill-particle"></div>
-      </div>
-
-      <SectionTitle subtitle="Technologies I use to build amazing solutions">
+      <SectionTitle subtitle="Technologies I use to build scalable solutions">
         Technical Skills
       </SectionTitle>
 
-      {/* Skills summary at top with animated counters */}
-      <div className="skills-summary">
-        <div className="summary-card">
-          <h4>{counters.years}+</h4>
-          <p>Years Experience</p>
-        </div>
-        <div className="summary-card">
-          <h4>{counters.technologies}+</h4>
-          <p>Technologies Mastered</p>
-        </div>
-        <div className="summary-card">
-          <h4>Full Stack</h4>
-          <p>Development Expertise</p>
-        </div>
-      </div>
-
-      {/* Display mode toggle */}
-      <div className="skill-display-toggle">
-        {/* <span>View skills by:</span> */}
-        <div className="toggle-buttons">
-          <button 
-            className={skillDisplayMode === 'percentage' ? 'active' : ''}
-            onClick={() => setSkillDisplayMode('percentage')}
-          >
-            Proficiency %
-          </button>
-          <button 
-            className={skillDisplayMode === 'experience' ? 'active' : ''}
-            onClick={() => setSkillDisplayMode('experience')}
-          >
-            Experience
-          </button>
-          <button 
-            className={skillDisplayMode === 'proficiency' ? 'active' : ''}
-            onClick={() => setSkillDisplayMode('proficiency')}
-          >
-            Level
-          </button>
-        </div>
-      </div>
+      <DisplayModeToggle
+        displayMode={displayMode}
+        onModeChange={setDisplayMode}
+      />
 
       <div className="skills-container">
-        {SKILLS_DATA.map((category, categoryIndex) => (
-          <div 
-            key={categoryIndex} 
-            className="skills-group"
-            style={{ 
-              animationDelay: `${categoryIndex * 0.15}s`,
-              '--category-color': category.color
-            }}
-          >
-            <div className="category-header">
-              <div className="category-icon">
-                {category.icon}
-              </div>
-              <h3 className="category-title">{category.category}</h3>
-            </div>
-            
-            <div className="skills-list">
-              {category.items.map((skill, skillIndex) => {
-                const skillKey = `${categoryIndex}-${skillIndex}`;
-                const isAnimated = animatedItems.has(skillKey);
-                const skillIcon = SKILL_ICONS[skill.name];
-                const proficiency = getProficiencyFromPercentage(skill.level);
-                
-                return (
-                  <div key={skillIndex} className="skill-item">
-                    <div className="skill-header">
-                      <div className="skill-info">
-                        {skillIcon && (
-                          <span className="skill-icon" aria-hidden="true">
-                            {skillIcon}
-                          </span>
-                        )}
-                        <span className="skill-name">{skill.name}</span>
-                      </div>
-                      <span 
-                        className={`skill-level ${skillDisplayMode === 'proficiency' ? getProficiencyClass(skill.level) : ''}`}
-                      >
-                        {getSkillDisplay(skill, skillDisplayMode)}
-                      </span>
-                    </div>
-                    
-                    {skillDisplayMode === 'percentage' && (
-                      <div className="skill-bar">
-                        <div 
-                          className={`skill-progress ${isAnimated ? 'animate' : ''}`}
-                          style={{ 
-                            '--skill-level': `${skill.level}%`,
-                            '--skill-color': category.color
-                          }}
-                          role="progressbar"
-                          aria-valuenow={skill.level}
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          aria-label={`${skill.name} proficiency: ${skill.level}%`}
-                        />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+        {SKILLS_DATA.map((group) => (
+          <SkillGroup
+            key={group.title}
+            group={group}
+            displayMode={displayMode}
+          />
         ))}
       </div>
     </section>

@@ -384,7 +384,7 @@ p {
   }
 }
 
-@media print {
+/* @media print {
   .hero-container { 
     background: none !important; 
     color: #000 !important; 
@@ -402,4 +402,4 @@ p {
     color: #000 !important; 
     -webkit-text-fill-color: #000 !important; 
   }
-}
+} */

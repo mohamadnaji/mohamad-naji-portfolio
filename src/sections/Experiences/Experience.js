@@ -48,9 +48,9 @@ const experience = [
     logo: cbsLogo,
     current: false,
     details: [
-      'Developed enterprise APIs using Oracle ADF and Spring Boot.',
+      'Developed enterprise code using Oracle ADF and Spring Boot.',
       'Designed and implemented Oracle PL/SQL databases.',
-      'Led code reviews, reducing bug rates by 25%.'
+      'Enhancing code with reviews, reducing bug rates by 25%.'
     ]
   },
   {
@@ -65,7 +65,7 @@ const experience = [
       'Delivered banking solutions for Banque du Liban, Al Rajhi Bank, and others.',
       'Engineered features with JSF and Spring Boot to meet client specs.',
       'Enhanced data management with Spring Data and Oracle.',
-      'Maintained and improved legacy systems across multiple environments.'
+      'Maintained and improved systems across multiple environments.'
     ]
   }
 ];

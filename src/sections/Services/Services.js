@@ -1,88 +1,91 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { 
-  FaCode, 
+  FaJava,
+  FaPython,
   FaServer, 
-  FaMobileAlt,
-  FaRocket,
-  FaCogs,
+  FaDatabase,
+  FaChartLine,
+  FaTools,
+  FaCode,
   FaCheckCircle,
   FaArrowRight
 } from 'react-icons/fa';
+import { SiSpring, SiRedis, SiPrometheus } from 'react-icons/si';
 import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Services.css';
 
 const SERVICES = [
   {
-    icon: <FaCode />,
-    title: 'Custom Software Development',
-    description: 'Building tailored software solutions from scratch using Java, Python, and modern frameworks. Expertise in creating scalable applications that solve complex business problems.',
+    icon: <FaJava />,
+    title: 'Enterprise Java Development',
+    description: 'Building robust, scalable enterprise applications using Java ecosystem. 7+ years of experience with Spring Boot, JSF, and microservices architecture.',
     features: [
-      'Enterprise Java Applications',
-      'Spring Boot Microservices',
-      'FastAPI & Python Solutions',
-      'Legacy System Modernization'
+      'Spring Boot & Spring Framework',
+      'JSF Enterprise Applications',
+      'RESTful API Development',
+      'Microservices Architecture'
+    ],
+    color: '#f89820'
+  },
+  {
+    icon: <FaDatabase />,
+    title: 'Database & Backend Systems',
+    description: 'Designing and optimizing database architectures with SQL expertise. Building high-performance backend systems with advanced caching and message queuing.',
+    features: [
+      'Oracle & MySQL Database Design',
+      'SQL Query Optimization',
+      'Redis Caching Solutions',
+      'RabbitMQ Message Queuing'
     ],
     color: '#0ea5e9'
   },
   {
-    icon: <FaServer />,
-    title: 'Backend & API Development',
-    description: 'Designing and implementing robust RESTful APIs and backend systems with focus on performance, security, and scalability.',
+    icon: <FaPython />,
+    title: 'Python API & Automation',
+    description: 'Developing fast, modern APIs with FastAPI and automating complex workflows. Expertise in web scraping, data processing, and Python-based solutions.',
     features: [
-      'RESTful API Architecture',
-      'Database Design & Optimization',
-      'Integration with Third-party APIs',
-      'Microservices Implementation'
+      'FastAPI Development',
+      'Web Scraping (Selenium, BeautifulSoup)',
+      'Workflow Automation',
+      'Firebase Integration'
     ],
-    color: '#8b5cf6'
+    color: '#3776ab'
   },
   {
-    icon: <FaMobileAlt />,
-    title: 'Full Stack Web Development',
-    description: 'End-to-end web application development with modern frontend frameworks and responsive design principles.',
+    icon: <FaChartLine />,
+    title: 'GIS & Data Science',
+    description: 'Geospatial analysis and data visualization with ESRI certification. Expertise in ArcGIS Pro, spatial data processing, and integrating GIS with modern web applications.',
     features: [
-      'React & Angular Applications',
-      'Responsive UI/UX Design',
-      'Single Page Applications',
-      'Progressive Web Apps'
-    ],
-    color: '#ec4899'
-  },
-  {
-    icon: <FaRocket />,
-    title: 'System Architecture & Design',
-    description: 'Creating scalable and maintainable system architectures with best practices and design patterns.',
-    features: [
-      'Microservices Architecture',
-      'System Design & Planning',
-      'Code Review & Refactoring',
-      'Technical Documentation'
+      'ArcGIS Pro & ESRI Tools',
+      'Spatial Data Analysis & Mapping',
+      'Web Scraping & Data Extraction',
+      'NLP & Text Processing (Spacy, NLTK)'
     ],
     color: '#10b981'
   },
   {
-    icon: <FaCogs />,
-    title: 'Data Processing & Automation',
-    description: 'Automating workflows and processing large datasets with Python, web scraping, and machine learning integration.',
+    icon: <FaCode />,
+    title: 'Full Stack Development',
+    description: 'Building complete web applications from frontend to backend. Proficient in JavaScript frameworks, responsive design, and modern development practices.',
     features: [
-      'Web Scraping (BeautifulSoup)',
-      'Data Analysis & Visualization',
-      'NLP & Text Processing',
-      'Workflow Automation'
+      'Vue.js Applications',
+      'JavaScript Development',
+      'Responsive UI/UX Design',
+      'Single Page Applications'
     ],
-    color: '#6366f1'
+    color: '#8b5cf6'
   },
   {
-    icon: <FaCode />,
-    title: 'Technical Consulting',
-    description: 'Providing expert guidance on technology selection, architecture decisions, and best practices for your projects.',
+    icon: <FaTools />,
+    title: 'DevOps & Monitoring',
+    description: 'Implementing CI/CD pipelines, containerization, and monitoring solutions. Ensuring application reliability with modern DevOps practices.',
     features: [
-      'Technology Stack Selection',
-      'Performance Optimization',
-      'Security Best Practices',
-      'Team Mentoring & Training'
+      'Docker Containerization',
+      'Git Version Control',
+      'Prometheus Monitoring',
+      'Swagger & OpenAPI Documentation'
     ],
-    color: '#ef4444'
+    color: '#ec4899'
   }
 ];
 
@@ -101,16 +104,29 @@ const Services = () => {
       },
       {
         threshold: isMobile ? 0.05 : 0.1,
-        rootMargin: isMobile ? '0px' : '50px'
+        rootMargin: isMobile ? '50px' : '100px'
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
-    return () => observer.disconnect();
-  }, []);
+    // Fallback timer for mobile
+    const fallbackTimer = setTimeout(() => {
+      if (!isVisible) {
+        setIsVisible(true);
+      }
+    }, 1000);
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+      clearTimeout(fallbackTimer);
+    };
+  }, [isVisible]);
 
   return (
     <section 
@@ -126,7 +142,7 @@ const Services = () => {
         <div className="service-particle"></div>
       </div>
 
-      <SectionTitle subtitle="Comprehensive solutions backed by 7 years of experience">
+      <SectionTitle subtitle="Leveraging 7+ years of expertise in backend development, databases, and modern tech stacks">
         What I Can Do For You
       </SectionTitle>
 
@@ -175,10 +191,12 @@ const Services = () => {
               </ul>
 
               {/* Learn More Link */}
-              {/* <div className="service-link">
+              {/* Uncomment if you want this feature
+              <div className="service-link">
                 <span>Discuss Your Project</span>
                 <FaArrowRight className="service-arrow" aria-hidden="true" />
-              </div> */}
+              </div>
+              */}
             </div>
           </article>
         ))}
@@ -187,7 +205,7 @@ const Services = () => {
       {/* Bottom CTA */}
       <div className="services-cta">
         <p className="cta-text">
-          Ready to bring your ideas to life? Let's collaborate and build something amazing together.
+          Ready to build scalable, robust solutions? Let's discuss how my expertise in Java, Python, databases, and modern technologies can help bring your project to life.
         </p>
         <a href="#contact" className="cta-button">
           <span>Start a Conversation</span>
