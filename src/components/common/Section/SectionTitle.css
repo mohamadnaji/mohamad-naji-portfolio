@@ -54,14 +54,37 @@
   transform: translateY(-50%);
 }
 
+.section-title-underline {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--hero-primary), var(--hero-secondary));
+  border-radius: 2px;
+  margin: 0.75rem auto 0.5rem;
+  position: relative;
+}
+
+.section-title-underline::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -4px;
+  width: 20px;
+  height: 3px;
+  background: var(--hero-accent);
+  border-radius: 2px;
+}
+
 .section-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--hero-text-secondary);
   font-weight: 400;
-  margin: 0.1rem 0 0 0;
+  margin: 0.4rem 0 0 0;
   opacity: 0.85;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   text-align: center;
+  max-width: 600px;
 }
 
 /* Light theme adjustments */

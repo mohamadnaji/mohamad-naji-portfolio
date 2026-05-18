@@ -1,18 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import emailjs from 'emailjs-com';
-import { 
-  FaEnvelope, 
-  FaPhone, 
-  FaLinkedinIn, 
-  FaMapMarkerAlt,
-  FaPaperPlane,
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaGithub,
-  FaHeart
+import {
+  FaEnvelope, FaPhone, FaLinkedinIn, FaMapMarkerAlt,
+  FaPaperPlane, FaCheckCircle, FaExclamationCircle, FaGithub, FaHeart
 } from 'react-icons/fa';
 import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Contact.css';
+import { fadeUp, scaleIn, staggerContainer } from '../../utils/motionVariants';
 
 const CONTACT_INFO = [
   {
@@ -46,32 +41,10 @@ const CONTACT_INFO = [
 ];
 
 const Contact = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
-  const sectionRef = useRef(null);
   const formRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '50px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   // Validation function
   const validateForm = (formData) => {
@@ -141,10 +114,10 @@ const Contact = () => {
 
     try {
       await emailjs.sendForm(
-        'service_tcwey44',
-        'template_rteuz9s',
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        'YTqBXwvpFYSWPJ7ZL'
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
       );
       
       setFormStatus({ 
@@ -175,10 +148,9 @@ const Contact = () => {
   };
 
   return (
-    <section 
-      className={`contact-section ${isVisible ? 'animate-in' : ''}`} 
+    <section
+      className="contact-section"
       id="contact"
-      ref={sectionRef}
       role="region"
       aria-label="Contact information and form"
     >
@@ -189,22 +161,33 @@ const Contact = () => {
       </div>
 
       <div className="contact-content">
-        <SectionTitle subtitle="Ready to bring your ideas to life? Let's start the conversation">
-          Let's Work Together
-        </SectionTitle>
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={fadeUp}
+        >
+          <SectionTitle subtitle="Ready to bring your ideas to life? Let's start the conversation">
+            Let's Work Together
+          </SectionTitle>
+        </motion.div>
 
         <div className="contact-container">
           {/* Quick Contact Cards */}
-          <div className="contact-quick">
-            {CONTACT_INFO.map((item, index) => (
-              <div key={item.type} className="contact-card" style={{ animationDelay: `${index * 0.1}s` }}>
-                <div className="contact-card-icon">
-                  {item.icon}
-                </div>
+          <motion.div
+            className="contact-quick"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
+            {CONTACT_INFO.map((item) => (
+              <motion.div key={item.type} className="contact-card" variants={scaleIn}>
+                <div className="contact-card-icon">{item.icon}</div>
                 <div className="contact-card-content">
                   <h4>{item.title}</h4>
                   {item.href ? (
-                    <a 
+                    <a
                       href={item.href}
                       target={item.type === 'linkedin' ? '_blank' : undefined}
                       rel={item.type === 'linkedin' ? 'noopener noreferrer' : undefined}
@@ -216,12 +199,18 @@ const Contact = () => {
                     <span>{item.value}</span>
                   )}
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="contact-form-wrapper">
+          <motion.div
+            className="contact-form-wrapper"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeUp}
+          >
             <div className="form-header">
               <h3>Send a Message</h3>
               <p>Have a project in mind? Let's discuss how we can work together.</p>
@@ -321,7 +310,7 @@ const Contact = () => {
                 </div>
               )}
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
 

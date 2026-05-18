@@ -17,15 +17,7 @@
   align-items: center;
   gap: 1rem;
   margin-bottom: 3rem;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
   width: 100%;
-}
-
-.projects-section.animate-in .project-filters {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .filter-label {
@@ -130,56 +122,43 @@
   gap: 2.5rem;
   max-width: 100%;
   margin: 0 0 4rem 0;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   box-sizing: border-box;
 }
 
-.projects-section.animate-in .projects-grid {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* Enhanced project card */
 .project-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: var(--hero-border-radius);
   padding: 2rem;
   backdrop-filter: blur(20px);
-  box-shadow: var(--hero-shadow-md);
-  transition: var(--hero-transition);
+  box-shadow: var(--glass-shadow);
+  transition: var(--transition-standard);
   position: relative;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(40px) scale(0.95);
   display: flex;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
 }
 
-.projects-section.animate-in .project-card {
-  animation: projectSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--glass-shadow), 0 0 30px color-mix(in srgb, var(--accent-color, var(--hero-primary)) 20%, transparent);
+  border-color: color-mix(in srgb, var(--accent-color, var(--hero-primary)) 40%, transparent);
+  background: var(--glass-bg-hover);
 }
 
-.project-card::before {
-  content: '';
+/* Per-card top accent stripe driven by --accent-color */
+.project-accent-bar {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--hero-primary), var(--hero-secondary), var(--hero-accent));
+  background: linear-gradient(90deg, var(--accent-color, var(--hero-primary)), transparent);
   border-radius: var(--hero-border-radius) var(--hero-border-radius) 0 0;
-}
-
-.project-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--hero-shadow-lg), 0 0 40px rgba(14, 165, 233, 0.15);
-  border-color: rgba(14, 165, 233, 0.2);
 }
 
 /* Project header */
@@ -457,20 +436,12 @@
   text-align: center;
   margin-top: 3rem;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: var(--hero-border-radius);
   backdrop-filter: blur(15px);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
   width: 100%;
   box-sizing: border-box;
-}
-
-.projects-section.animate-in .projects-cta {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .projects-cta p {
@@ -514,22 +485,10 @@
   opacity: 1;
 }
 
-/* Animations */
-@keyframes projectSlideIn {
-  0% { 
-    opacity: 0; 
-    transform: translateY(40px) scale(0.95); 
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1); 
-  }
-}
-
 /* Light theme adjustments */
 :root[data-theme="light"] .project-card {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 140, 190, 0.15);
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
 }
 
 :root[data-theme="light"] .tech-item {
@@ -543,8 +502,8 @@
 }
 
 :root[data-theme="light"] .projects-cta {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(0, 140, 190, 0.15);
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
 }
 
 :root[data-theme="light"] .github-link {

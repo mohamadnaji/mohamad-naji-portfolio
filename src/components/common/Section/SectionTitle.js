@@ -5,6 +5,7 @@ const SectionTitle = ({ children, subtitle }) => {
   return (
     <div className="section-title-container">
       <h2 className="section-title">{children}</h2>
+      <span className="section-title-underline" aria-hidden="true" />
       {subtitle && <p className="section-subtitle">{subtitle}</p>}
     </div>
   );

@@ -80,6 +80,10 @@ const Hero = () => {
 
       {/* Left Column */}
       <div className="hero-left">
+        <div className="hero-status-badge" aria-label="Availability status">
+          <span className="status-dot" aria-hidden="true" />
+          Available for opportunities
+        </div>
         <h1 aria-label="My name is Mohamad Naji">Mohamad NAJI</h1>
         <h2>
           I'm a{' '}
@@ -151,6 +155,11 @@ const Hero = () => {
           </a>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <a className="scroll-indicator" href="#about" aria-label="Scroll to about section">
+        <span className="scroll-chevron" aria-hidden="true" />
+      </a>
 
       {/* Right Column */}
       <div className="hero-right">
