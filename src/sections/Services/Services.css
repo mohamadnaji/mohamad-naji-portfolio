@@ -71,10 +71,39 @@
 
 .service-card:hover,
 .service-card.hovered {
-  transform: translateY(-8px);
   background: var(--glass-bg-hover);
-  box-shadow: var(--glass-shadow), 0 0 25px color-mix(in srgb, var(--service-color, var(--hero-primary)) 25%, transparent);
-  border-color: color-mix(in srgb, var(--service-color, var(--hero-primary)) 35%, transparent);
+  box-shadow: var(--glass-shadow), 0 0 30px color-mix(in srgb, var(--service-color, var(--hero-primary)) 30%, transparent);
+  border-color: color-mix(in srgb, var(--service-color, var(--hero-primary)) 40%, transparent);
+}
+
+/* Shimmer sweep on hover */
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent);
+  transform: skewX(-15deg);
+  pointer-events: none;
+  z-index: 2;
+  transition: none;
+  border-radius: inherit;
+}
+
+.service-card:hover::after {
+  left: 130%;
+  transition: left 0.65s ease;
+}
+
+/* Tilt spotlight */
+.tilt-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
 }
 
 /* Top gradient bar */

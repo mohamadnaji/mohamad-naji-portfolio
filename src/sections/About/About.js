@@ -42,15 +42,20 @@ const About = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={scaleIn}
         >
-          <div className="image-wrapper">
-            <img
-              src={profileImg}
-              alt="Mohamad Naji - Full Stack Developer"
-              loading="lazy"
-              draggable="false"
-            />
-            <div className="image-glow" aria-hidden="true"></div>
-          </div>
+          <motion.div
+            animate={{ y: [0, -14, 0] }}
+            transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
+          >
+            <div className="image-wrapper">
+              <img
+                src={profileImg}
+                alt="Mohamad Naji - Full Stack Developer"
+                loading="lazy"
+                draggable="false"
+              />
+              <div className="image-glow" aria-hidden="true"></div>
+            </div>
+          </motion.div>
         </motion.div>
 
         <motion.div

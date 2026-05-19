@@ -144,10 +144,38 @@
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--glass-shadow), 0 0 30px color-mix(in srgb, var(--accent-color, var(--hero-primary)) 20%, transparent);
-  border-color: color-mix(in srgb, var(--accent-color, var(--hero-primary)) 40%, transparent);
+  box-shadow: var(--glass-shadow), 0 0 35px color-mix(in srgb, var(--accent-color, var(--hero-primary)) 25%, transparent);
+  border-color: color-mix(in srgb, var(--accent-color, var(--hero-primary)) 45%, transparent);
   background: var(--glass-bg-hover);
+}
+
+/* Shimmer sweep */
+.project-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.07), transparent);
+  transform: skewX(-15deg);
+  pointer-events: none;
+  z-index: 2;
+  transition: none;
+}
+
+.project-card:hover::after {
+  left: 130%;
+  transition: left 0.65s ease;
+}
+
+/* Tilt spotlight */
+.project-card .tilt-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
 }
 
 /* Per-card top accent stripe driven by --accent-color */

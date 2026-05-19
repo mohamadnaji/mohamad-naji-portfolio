@@ -5,6 +5,7 @@ import {
   FaTools, FaCode, FaCheckCircle, FaArrowRight
 } from 'react-icons/fa';
 import SectionTitle from '../../components/common/Section/SectionTitle';
+import TiltCard from '../../components/common/TiltCard';
 import './Services.css';
 import { fadeUp, scaleIn, staggerContainer } from '../../utils/motionVariants';
 
@@ -87,13 +88,15 @@ const Services = () => {
         variants={staggerContainer}
       >
         {SERVICES.map((service, index) => (
-          <motion.article
+          <TiltCard
             key={index}
+            role="article"
             className={`service-card ${hoveredIndex === index ? 'hovered' : ''}`}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
             style={{ '--service-color': service.color }}
             variants={scaleIn}
+            whileHover={{ y: -8 }}
           >
             <div className="service-top-bar" />
             <div className="service-glow" />
@@ -115,7 +118,7 @@ const Services = () => {
                 ))}
               </ul>
             </div>
-          </motion.article>
+          </TiltCard>
         ))}
       </motion.div>
 

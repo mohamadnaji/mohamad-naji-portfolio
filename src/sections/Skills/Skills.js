@@ -7,7 +7,7 @@ import {
 import { SiRedis, SiPrometheus } from 'react-icons/si';
 import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Skills.css';
-import { fadeUp, scaleIn, staggerContainer } from '../../utils/motionVariants';
+import { fadeUp, scaleIn, staggerContainer, skillItemFade, skillListStagger } from '../../utils/motionVariants';
 
 const SKILL_ICONS = {
   'Java (Spring Boot, JSF)': FaJava,
@@ -111,7 +111,7 @@ const SkillItem = ({ skill, displayMode }) => {
   const displayValue = displayMode === 'experience' ? skill.years : proficiency.label;
 
   return (
-    <li className="skill-item">
+    <motion.li className="skill-item" variants={skillItemFade}>
       <div className="skill-info">
         {SkillIcon && (
           <span className="skill-icon" aria-hidden="true">
@@ -121,7 +121,7 @@ const SkillItem = ({ skill, displayMode }) => {
         <span className="skill-name">{skill.name}</span>
       </div>
       <span className={`skill-level ${proficiency.className}`}>{displayValue}</span>
-    </li>
+    </motion.li>
   );
 };
 
@@ -137,11 +137,11 @@ const SkillGroup = ({ group, displayMode }) => {
         </span>
         <h3>{group.title}</h3>
       </header>
-      <ul className="skills-list">
+      <motion.ul className="skills-list" variants={skillListStagger}>
         {sortedSkills.map((skill) => (
           <SkillItem key={skill.name} skill={skill} displayMode={displayMode} />
         ))}
-      </ul>
+      </motion.ul>
     </motion.div>
   );
 };

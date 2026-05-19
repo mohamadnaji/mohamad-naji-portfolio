@@ -4,6 +4,7 @@ import { FaShieldAlt, FaJava, FaGithub, FaPlane, FaRocket, FaChartLine,
   FaBroadcastTower, FaDesktop, FaDatabase } from 'react-icons/fa';
 import { SiPython, SiFastapi, SiLaravel, SiJquery, SiBootstrap, SiCss3 } from 'react-icons/si';
 import SectionTitle from '../../components/common/Section/SectionTitle';
+import TiltCard from '../../components/common/TiltCard';
 import './Projects.css';
 import { fadeUp, scaleIn, staggerContainer } from '../../utils/motionVariants';
 
@@ -154,12 +155,14 @@ const Projects = () => {
           variants={staggerContainer}
         >
           {filteredProjects.map((project) => (
-            <motion.article
+            <TiltCard
               key={project.title}
+              role="article"
               className="project-card"
               variants={scaleIn}
               style={{ '--accent-color': CATEGORY_COLORS[project.category] || 'var(--hero-primary)' }}
               layout
+              whileHover={{ y: -7 }}
             >
               <div className="project-accent-bar" aria-hidden="true" />
 
@@ -226,7 +229,7 @@ const Projects = () => {
                   </div>
                 </div>
               </div>
-            </motion.article>
+            </TiltCard>
           ))}
         </motion.div>
       </AnimatePresence>

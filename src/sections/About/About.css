@@ -100,9 +100,9 @@
     var(--hero-primary) 360deg
   );
   border-radius: var(--hero-border-radius);
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  opacity: 0.25;
   animation: spin 8s linear infinite;
+  transition: opacity 0.4s ease;
 }
 
 .image-wrapper:hover::before {
