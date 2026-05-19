@@ -97,13 +97,26 @@
   transition: left 0.65s ease;
 }
 
-/* Tilt spotlight */
+/* Tilt spotlight — moves via transform (GPU-only, no paint) */
 .tilt-spotlight {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
   border-radius: inherit;
+  overflow: hidden;
+}
+
+.tilt-spotlight::before {
+  content: '';
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 65%);
+  transform: translate(calc(var(--spot-x, -400px) - 130px), calc(var(--spot-y, -400px) - 130px));
+  pointer-events: none;
+  will-change: transform;
 }
 
 /* Top gradient bar */

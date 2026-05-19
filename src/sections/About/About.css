@@ -62,6 +62,16 @@
   75% { transform: translateY(-20px) translateX(15px); opacity: 0.6; }
 }
 
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.image-float {
+  animation: floatY 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Main container */
 .about-container {
   display: flex;
@@ -410,7 +420,8 @@
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .about-particle,
-  .image-wrapper::before {
+  .image-wrapper::before,
+  .image-float {
     animation: none !important;
   }
 }

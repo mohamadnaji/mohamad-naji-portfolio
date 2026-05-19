@@ -42,10 +42,7 @@ const About = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={scaleIn}
         >
-          <motion.div
-            animate={{ y: [0, -14, 0] }}
-            transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
-          >
+          <div className="image-float">
             <div className="image-wrapper">
               <img
                 src={profileImg}
@@ -55,7 +52,7 @@ const About = () => {
               />
               <div className="image-glow" aria-hidden="true"></div>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
 
         <motion.div
