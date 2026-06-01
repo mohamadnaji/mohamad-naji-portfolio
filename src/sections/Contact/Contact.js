@@ -151,7 +151,6 @@ const Contact = () => {
     <section
       className="contact-section"
       id="contact"
-      role="region"
       aria-label="Contact information and form"
     >
       <div className="contact-bg-decoration" aria-hidden="true">

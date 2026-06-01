@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import SectionTitle from '../../components/common/Section/SectionTitle.js';
 import './About.css';
 import profileImg from '../../assets/about/profile-about.png';
-import { fadeUp, fadeIn, scaleIn, staggerContainer } from '../../utils/motionVariants';
+import { fadeUp, scaleIn, staggerContainer } from '../../utils/motionVariants';
 
 const stats = [
   { value: '7+', label: 'Years Experience' },
@@ -16,7 +16,6 @@ const About = () => {
     <section
       className="about-section"
       id="about"
-      role="region"
       aria-label="About Mohamad Naji"
     >
       <div className="about-bg-decoration" aria-hidden="true">

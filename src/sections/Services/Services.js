@@ -61,7 +61,6 @@ const Services = () => {
     <section
       className="services-section"
       id="services"
-      role="region"
       aria-label="Professional services offered"
     >
       <div className="services-bg-decoration" aria-hidden="true">

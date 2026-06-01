@@ -106,7 +106,6 @@ const Projects = () => {
     <section
       className="projects-section"
       id="projects"
-      role="region"
       aria-label="Featured projects and work"
     >
       <motion.div

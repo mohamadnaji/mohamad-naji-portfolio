@@ -45,7 +45,6 @@ const Education = () => {
     <section
       className="education-section"
       id="education"
-      role="region"
       aria-label="Educational background and qualifications"
     >
       <motion.div

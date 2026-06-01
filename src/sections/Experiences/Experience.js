@@ -77,7 +77,6 @@ const Experience = () => {
     <section
       className="experience-section"
       id="experience"
-      role="region"
       aria-label="Professional work experience"
     >
       <motion.div
