@@ -1,12 +1,20 @@
 /* ================= GLOBAL IMPORTS & BASE STYLES ================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap&font-display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap&font-display=swap');
 
 /* ================= THEME VARIABLES ================= */
 
 /* Dark Mode */
 :root {
+  /* Glassmorphism tokens */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-bg-hover: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(255, 255, 255, 0.22);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  --transition-standard: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
   --color-bg-start: #0a0f2c;
   --color-bg-mid: #004d61;
   --color-surface: rgba(255, 255, 255, 0.06);
@@ -44,6 +52,11 @@
 
 /* Light Mode */
 :root[data-theme="light"] {
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-bg-hover: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(0, 140, 190, 0.2);
+  --glass-border-hover: rgba(0, 140, 190, 0.4);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   --color-bg-start: #f4f8fc;
   --color-bg-mid: #d6e9f5;
   --color-surface: rgba(255, 255, 255, 0.9);
@@ -73,6 +86,86 @@
   --hero-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --hero-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
   --hero-shadow-glow: 0 0 20px var(--hero-glow-primary);
+}
+
+/* ================= AURORA BACKGROUND ================= */
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.aurora-orb-1 {
+  width: 50vw;
+  height: 50vw;
+  left: -18vw;
+  top: 5vh;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(6, 182, 212, 0.04) 50%, transparent 70%);
+  animation: auroraFloat1 28s ease-in-out infinite alternate;
+}
+
+.aurora-orb-2 {
+  width: 42vw;
+  height: 42vw;
+  right: -14vw;
+  bottom: 10vh;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.09) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 70%);
+  animation: auroraFloat2 32s ease-in-out infinite alternate;
+}
+
+.aurora-orb-3 {
+  width: 32vw;
+  height: 32vw;
+  left: 35vw;
+  top: 45vh;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.07) 0%, rgba(5, 150, 105, 0.03) 50%, transparent 70%);
+  animation: auroraFloat3 24s ease-in-out infinite alternate;
+}
+
+@keyframes auroraFloat1 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(4vw, -6vh); }
+  66%  { transform: translate(-3vw, 4vh); }
+  100% { transform: translate(2vw, 5vh); }
+}
+
+@keyframes auroraFloat2 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-5vw, 5vh); }
+  66%  { transform: translate(3vw, -4vh); }
+  100% { transform: translate(-2vw, -3vh); }
+}
+
+@keyframes auroraFloat3 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(3vw, -8vh); }
+  100% { transform: translate(-3vw, 3vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-orb { animation: none; }
+}
+
+/* Dim aurora in light mode */
+:root[data-theme="light"] .aurora-orb-1 {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.07) 0%, rgba(6, 182, 212, 0.03) 50%, transparent 70%);
+}
+:root[data-theme="light"] .aurora-orb-2 {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, rgba(99, 102, 241, 0.02) 50%, transparent 70%);
+}
+:root[data-theme="light"] .aurora-orb-3 {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
 }
 
 /* ================= KEYFRAMES (GLOBAL ANIMATIONS) ================= */

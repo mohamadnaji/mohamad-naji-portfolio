@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaCalendarAlt, FaBriefcase } from 'react-icons/fa';
 import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Experience.css';
@@ -6,6 +7,7 @@ import nakisaLogo from '../../assets/experiences/nakisa.png';
 import cbsLogo from '../../assets/experiences/cbs.png';
 import montyLogo from '../../assets/experiences/mymonty.png';
 import citsLogo from '../../assets/experiences/cits.png';
+import { fadeUp, slideInLeft, slideInRight, staggerContainer } from '../../utils/motionVariants';
 
 const experience = [
   {
@@ -71,67 +73,52 @@ const experience = [
 ];
 
 const Experience = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '50px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section 
-      className={`experience-section ${isVisible ? 'animate-in' : ''}`} 
+    <section
+      className="experience-section"
       id="experience"
-      ref={sectionRef}
       role="region"
       aria-label="Professional work experience"
     >
-      <SectionTitle subtitle="My professional journey and key achievements">
-        Work Experience
-      </SectionTitle>
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={fadeUp}
+      >
+        <SectionTitle subtitle="My professional journey and key achievements">
+          Work Experience
+        </SectionTitle>
+      </motion.div>
 
-      <div className="timeline">
+      <motion.div
+        className="timeline"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.05 }}
+        variants={staggerContainer}
+      >
         {experience.map((item, index) => (
-          <div 
+          <motion.div
             className={`timeline-item ${item.current ? 'current-role' : ''}`}
             key={index}
-            style={{ animationDelay: `${index * 0.2}s` }}
+            variants={index % 2 === 0 ? slideInLeft : slideInRight}
           >
             <div className="timeline-dot">
               <FaBriefcase />
             </div>
-            
+
             <div className="timeline-content">
               <div className="experience-header">
                 <div className="company-info">
-                  <img
-                    src={item.logo}
-                    alt={`${item.company} logo`}
-                    className="company-logo"
-                  />
+                  <img src={item.logo} alt={`${item.company} logo`} className="company-logo" />
                   <div className="company-details">
                     <h3 className="job-title">{item.title}</h3>
                     <h4 className="company-name">{item.company}</h4>
                     {item.current && <span className="current-badge">Current</span>}
                   </div>
                 </div>
-                
+
                 <div className="job-meta">
                   <div className="job-info">
                     <FaCalendarAlt />
@@ -152,9 +139,9 @@ const Experience = () => {
                 </ul>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { FaGraduationCap, FaCalendarAlt, FaMapMarkerAlt, FaAward } from 'react-icons/fa';
 import SectionTitle from '../../components/common/Section/SectionTitle';
 import './Education.css';
 import ulLogo from '../../assets/educations/ul.png';
-
+import { fadeUp, scaleIn, staggerContainer } from '../../utils/motionVariants';
 
 const education = [
   {
@@ -11,7 +12,7 @@ const education = [
     school: 'Lebanese University',
     location: 'Beirut, Lebanon',
     date: '2022 – 2024',
-    type: 'Master\'s',
+    type: "Master's",
     level: 'Graduate',
     details: [
       'Relevant courses: Python, Deep Learning, Big Data, NLP, Remote Sensing, Geodatabase, Spatial Analysis'
@@ -24,7 +25,7 @@ const education = [
     school: 'Lebanese University',
     location: 'Beirut, Lebanon',
     date: '2016 – 2019',
-    type: 'Bachelor\'s',
+    type: "Bachelor's",
     level: 'Undergraduate',
     details: [
       'Relevant courses: Java, PHP, Design Patterns, Data Structures, Database, Operating Systems, Parallel Programming, System Administration'
@@ -36,51 +37,40 @@ const education = [
 
 function getInitials(name = '') {
   const parts = name.trim().split(/\s+/);
-  return parts.slice(0, 2).map(w => (w[0] || '').toUpperCase()).join('');
+  return parts.slice(0, 2).map((w) => (w[0] || '').toUpperCase()).join('');
 }
 
 const Education = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '50px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section 
-      className={`education-section ${isVisible ? 'animate-in' : ''}`} 
+    <section
+      className="education-section"
       id="education"
-      ref={sectionRef}
       role="region"
       aria-label="Educational background and qualifications"
     >
-      <SectionTitle subtitle="My academic journey and educational qualifications">
-        Education
-      </SectionTitle>
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={fadeUp}
+      >
+        <SectionTitle subtitle="My academic journey and educational qualifications">
+          Education
+        </SectionTitle>
+      </motion.div>
 
-      <div className="education-timeline">
+      <motion.div
+        className="education-timeline"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={staggerContainer}
+      >
         {education.map((edu, index) => (
-          <article
+          <motion.article
             key={`${edu.school}-${edu.degree}-${edu.date}-${index}`}
             className="education-item"
-            style={{ animationDelay: `${index * 0.2}s` }}
+            variants={scaleIn}
           >
             <div className="timeline-dot">
               <FaGraduationCap />
@@ -110,7 +100,7 @@ const Education = () => {
                 <div className="education-info">
                   <h3 className="degree-title">{edu.degree}</h3>
                   <h4 className="school-name">{edu.school}</h4>
-                  
+
                   <div className="education-meta">
                     <div className="meta-item">
                       <FaCalendarAlt />
@@ -135,40 +125,31 @@ const Education = () => {
                 </div>
               )}
             </div>
-          </article>
+          </motion.article>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Education summary */}
-      <div className="education-summary">
-        <div className="summary-item">
-          <div className="summary-icon">
-            <FaGraduationCap />
-          </div>
-          <div className="summary-content">
-            <h4>Master's Degree</h4>
-            <p>GIS and Data Science</p>
-          </div>
-        </div>
-        <div className="summary-item">
-          <div className="summary-icon">
-            <FaAward />
-          </div>
-          <div className="summary-content">
-            <h4>7+ Years</h4>
-            <p>Academic Excellence</p>
-          </div>
-        </div>
-        <div className="summary-item">
-          <div className="summary-icon">
-            <FaMapMarkerAlt />
-          </div>
-          <div className="summary-content">
-            <h4>Lebanese University</h4>
-            <p>Prestigious Institution</p>
-          </div>
-        </div>
-      </div>
+      <motion.div
+        className="education-summary"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={staggerContainer}
+      >
+        {[
+          { icon: <FaGraduationCap />, title: "Master's Degree", sub: 'GIS and Data Science' },
+          { icon: <FaAward />,         title: '7+ Years',         sub: 'Academic Excellence' },
+          { icon: <FaMapMarkerAlt />,  title: 'Lebanese University', sub: 'Prestigious Institution' }
+        ].map((item) => (
+          <motion.div key={item.title} className="summary-item" variants={scaleIn}>
+            <div className="summary-icon">{item.icon}</div>
+            <div className="summary-content">
+              <h4>{item.title}</h4>
+              <p>{item.sub}</p>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
     </section>
   );
 };

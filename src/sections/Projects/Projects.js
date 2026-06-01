@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FaShieldAlt,
-  FaJava, FaGithub, FaPlane, FaRocket, FaChartLine, FaBroadcastTower,FaDesktop,FaDatabase } from 'react-icons/fa';
-import { SiPython, SiFastapi, SiPhp, SiLaravel, SiJquery, SiBootstrap,
-  SiCss3  } from 'react-icons/si';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaShieldAlt, FaJava, FaGithub, FaPlane, FaRocket, FaChartLine,
+  FaBroadcastTower, FaDesktop, FaDatabase } from 'react-icons/fa';
+import { SiPython, SiFastapi, SiLaravel, SiJquery, SiBootstrap, SiCss3 } from 'react-icons/si';
 import SectionTitle from '../../components/common/Section/SectionTitle';
+import TiltCard from '../../components/common/TiltCard';
 import './Projects.css';
+import { fadeUp, scaleIn, staggerContainer } from '../../utils/motionVariants';
 
 import arsLogo from '../../assets/projects/ARS.png';
 import rfsLogo from '../../assets/projects/RFS.png';
@@ -21,11 +23,16 @@ const TECH_ICONS = {
   'jQuery': <SiJquery />,
   'Bootstrap': <SiBootstrap />,
   'Dynamic Programming': <FaChartLine />,
-  
   'Java': <FaJava />,
   'JavaFX': <FaDesktop />,
   'CSS': <SiCss3 />,
   'SQL Server': <FaDatabase />
+};
+
+const CATEGORY_COLORS = {
+  'Machine Learning': 'var(--hero-accent)',
+  'Web Development': 'var(--hero-secondary)',
+  'Software Development': 'var(--hero-success)'
 };
 
 const projects = [
@@ -63,9 +70,9 @@ const projects = [
     category: 'Software Development',
     icon: <FaShieldAlt />,
     description: [
-      'Built a desktop application using JavaFX and SQL Server to automate and manage insurance operations',
-      'Supports registration of agents, companies, and clients, along with management of insurance contracts and annual premium payments',
-      'Enhanced productivity through an intuitive user interface and streamlined data processing'
+      'Built a desktop application using JavaFX and SQL Server to automate insurance operations.',
+      'Supports registration of agents, companies, and clients, along with management of contracts and payments.',
+      'Enhanced productivity through an intuitive interface and streamlined data processing.'
     ],
     tech: ['Java', 'JavaFX', 'CSS', 'SQL Server'],
     logo: assuranceLogo,
@@ -78,8 +85,8 @@ const projects = [
     category: 'Software Development',
     icon: <FaPlane />,
     description: [
-      'Developed a university project to manage airline reservations, ticketing, and seat allocation with a user-friendly interface',
-      'Enables airline staff to monitor flights, manage seat availability, and handle bookings efficiently, improving accuracy and customer experience.'
+      'Developed a university project to manage airline reservations, ticketing, and seat allocation.',
+      'Enables staff to monitor flights, manage seat availability, and handle bookings efficiently.'
     ],
     tech: ['Java', 'JavaFX'],
     logo: arsLogo,
@@ -90,177 +97,159 @@ const projects = [
 ];
 
 const Projects = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const sectionRef = useRef(null);
-
-  // Get unique categories from projects
-  const categories = ['All', ...new Set(projects.map(project => project.category))];
-
-  // Filter projects based on active filter
-  const filteredProjects = activeFilter === 'All' 
-    ? projects 
-    : projects.filter(project => project.category === activeFilter);
-
-  // Handle responsive behavior
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: isMobile ? 0.1 : 0.2,
-        rootMargin: isMobile ? '0px' : '50px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [isMobile]);
-
-  const handleFilterChange = (category) => {
-    setActiveFilter(category);
-  };
+  const categories = ['All', ...new Set(projects.map((p) => p.category))];
+  const filteredProjects =
+    activeFilter === 'All' ? projects : projects.filter((p) => p.category === activeFilter);
 
   return (
-    <section 
-      className={`projects-section ${isVisible ? 'animate-in' : ''}`} 
+    <section
+      className="projects-section"
       id="projects"
-      ref={sectionRef}
       role="region"
       aria-label="Featured projects and work"
     >
-      <SectionTitle subtitle="Featured projects showcasing my technical expertise">
-        Featured Projects
-      </SectionTitle>
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={fadeUp}
+      >
+        <SectionTitle subtitle="Featured projects showcasing my technical expertise">
+          Featured Projects
+        </SectionTitle>
+      </motion.div>
 
-      {/* Category Filter */}
-      <div className="project-filters">
+      <motion.div
+        className="project-filters"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeUp}
+      >
         <div className="filter-buttons">
           {categories.map((category) => (
             <button
               key={category}
               className={`filter-btn ${activeFilter === category ? 'active' : ''}`}
-              onClick={() => handleFilterChange(category)}
+              onClick={() => setActiveFilter(category)}
               aria-label={`Filter projects by ${category}`}
             >
               {category}
               {category !== 'All' && (
                 <span className="project-count">
-                  {projects.filter(p => p.category === category).length}
+                  {projects.filter((p) => p.category === category).length}
                 </span>
               )}
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      <div className="projects-grid">
-        {filteredProjects.map((project, index) => (
-          <article 
-            key={`${project.title}-${project.category}`} 
-            className="project-card"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <div className="project-header">
-              <div className="project-logo-container">
-                <img
-                  src={project.logo}
-                  alt={`${project.title} logo`}
-                  className="project-logo"
-                  loading="lazy"
-                />
-                <div className="project-icon" aria-hidden="true">
-                  {project.icon}
-                </div>
-              </div>
-              
-              <div className="project-meta">
-                <span className="project-category">{project.category}</span>
-                <span className="project-year">{project.year}</span>
-              </div>
-            </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeFilter}
+          className="projects-grid"
+          initial="hidden"
+          animate="show"
+          variants={staggerContainer}
+        >
+          {filteredProjects.map((project) => (
+            <TiltCard
+              key={project.title}
+              role="article"
+              className="project-card"
+              variants={scaleIn}
+              style={{ '--accent-color': CATEGORY_COLORS[project.category] || 'var(--hero-primary)' }}
+              layout
+              whileHover={{ y: -7 }}
+            >
+              <div className="project-accent-bar" aria-hidden="true" />
 
-            <div className="project-content">
-              <h3 className="project-title">{project.title}</h3>
-              
-              <ul className="project-description">
-                {project.description.map((point, idx) => (
-                  <li key={idx}>{point}</li>
-                ))}
-              </ul>
-
-              <div className="project-footer">
-                <div className="tech-stack">
-                  <h4>Technologies Used:</h4>
-                  <ul className="tech-list">
-                    {project.tech.map((tech, idx) => (
-                      <li key={idx} className="tech-item">
-                        <span className="tech-icon" aria-hidden="true">
-                          {TECH_ICONS[tech] || <FaRocket />}
-                        </span>
-                        <span className="tech-name">{tech}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <div className="project-header">
+                <div className="project-logo-container">
+                  <img
+                    src={project.logo}
+                    alt={`${project.title} logo`}
+                    className="project-logo"
+                    loading="lazy"
+                  />
+                  <div className="project-icon" aria-hidden="true">
+                    {project.icon}
+                  </div>
                 </div>
 
-                <div className="project-actions">
-                  <div className="project-status">
+                <div className="project-meta">
+                  <span className="project-category">{project.category}</span>
+                  <span className="project-year">{project.year}</span>
+                </div>
+              </div>
+
+              <div className="project-content">
+                <h3 className="project-title">{project.title}</h3>
+
+                <ul className="project-description">
+                  {project.description.map((point, idx) => (
+                    <li key={idx}>{point}</li>
+                  ))}
+                </ul>
+
+                <div className="project-footer">
+                  <div className="tech-stack">
+                    <ul className="tech-list">
+                      {project.tech.map((tech, idx) => (
+                        <li key={idx} className="tech-item">
+                          <span className="tech-icon" aria-hidden="true">
+                            {TECH_ICONS[tech] || <FaRocket />}
+                          </span>
+                          <span className="tech-name">{tech}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="project-actions">
                     <span className={`status-badge ${project.status.toLowerCase()}`}>
                       {project.status}
                     </span>
-                  </div>
 
-                  {project.github && (
-                    <a 
-                      href={project.github} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="github-link"
-                      aria-label={`View ${project.title} on GitHub`}
-                      title="View on GitHub"
-                    >
-                      <FaGithub />
-                      <span>Code</span>
-                    </a>
-                  )}
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="github-link"
+                        aria-label={`View ${project.title} on GitHub`}
+                        title="View on GitHub"
+                      >
+                        <FaGithub />
+                        <span>Code</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
+            </TiltCard>
+          ))}
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Show message when no projects match filter */}
       {filteredProjects.length === 0 && (
         <div className="no-projects-message">
           <p>No projects found in the "{activeFilter}" category.</p>
         </div>
       )}
 
-      {/* Call to action */}
-      <div className="projects-cta">
+      <motion.div
+        className="projects-cta"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={fadeUp}
+      >
         <p>Want to see more projects or discuss a collaboration?</p>
-        <a href="#contact" className="cta-button">
-          Let's Connect
-        </a>
-      </div>
+        <a href="#contact" className="cta-button">Let's Connect</a>
+      </motion.div>
     </section>
   );
 };
