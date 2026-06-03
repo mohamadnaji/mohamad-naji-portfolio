@@ -89,7 +89,7 @@ jobs:
 
             echo "🏥 Running health check..."
             sleep 3
-            HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://${{ secrets.SERVER_HOST }})
+            HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" -k http://${{ secrets.SERVER_HOST }})
             if [ "$HTTP_STATUS" -eq 200 ]; then
               echo "✅ Site is up and running! (HTTP $HTTP_STATUS)"
             else
