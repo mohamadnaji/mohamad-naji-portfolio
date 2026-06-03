@@ -161,6 +161,110 @@ RewriteRule ^ index.html [QSA,L]
 
 ---
 
+## CI/CD Pipeline
+
+This project uses **GitHub Actions** for automated deployment to a VPS running Nginx.
+
+### How it works
+
+Every push to `main` automatically:
+1. Runs **ESLint** to check code quality
+2. Runs **unit tests** — blocks deploy if they fail
+3. SSHs into the server and:
+   - Pulls latest code (`git pull origin main`)
+   - Installs dependencies only if `package-lock.json` changed
+   - Backs up the current `build/` folder
+   - Runs `npm run build`
+   - **Auto-rolls back** to the previous build if the new build fails
+   - Runs a health check on the live site
+4. Sends a **Telegram notification** with the result (✅ or ❌)
+
+### Flow diagram
+
+```
+git push origin main
+        ↓
+ESLint + Tests
+        ↓ (only if passing)
+SSH into server
+        ↓
+git pull → smart npm ci → build
+        ↓
+Auto rollback if build fails
+        ↓
+Health check
+        ↓
+Telegram notification ✅ or ❌
+```
+
+### GitHub Secrets required
+
+Go to `GitHub repo → Settings → Secrets and variables → Actions` and add:
+
+| Secret | Description |
+|---|---|
+| `SERVER_HOST` | Server IP address |
+| `SERVER_USER` | SSH username (e.g. `root`) |
+| `SERVER_SSH_KEY` | Private SSH key (`cat ~/.ssh/github_deploy`) |
+| `SERVER_PORT` | SSH port (usually `22`) |
+| `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather |
+| `TELEGRAM_CHAT_ID` | Your Telegram chat ID |
+| `REACT_APP_EMAILJS_SERVICE_ID` | EmailJS service ID |
+| `REACT_APP_EMAILJS_TEMPLATE_ID` | EmailJS template ID |
+| `REACT_APP_EMAILJS_PUBLIC_KEY` | EmailJS public key |
+
+### Server setup
+
+The server must have:
+- **Node.js** installed
+- **Nginx** pointing to `/var/www/mohamad-naji-portfolio/build`
+- The repo cloned at `/var/www/mohamad-naji-portfolio`
+
+```bash
+# Initial server setup (run once)
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git /var/www/mohamad-naji-portfolio
+cd /var/www/mohamad-naji-portfolio
+npm ci
+npm run build
+```
+
+### Nginx config
+
+```nginx
+server {
+    listen 80;
+    root /var/www/mohamad-naji-portfolio/build;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+}
+```
+
+### SSH key setup (run on server)
+
+```bash
+# Generate key pair
+ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_deploy
+
+# Authorize the public key
+cat ~/.ssh/github_deploy.pub >> ~/.ssh/authorized_keys
+
+# Copy private key → paste into SERVER_SSH_KEY secret
+cat ~/.ssh/github_deploy
+```
+
+### Telegram notifications setup
+
+1. Open Telegram → search **@BotFather** → send `/newbot`
+2. Save the token → add as `TELEGRAM_BOT_TOKEN` secret
+3. Send any message to your bot, then open:
+   `https://api.telegram.org/bot<TOKEN>/getUpdates`
+4. Copy the `chat.id` value → add as `TELEGRAM_CHAT_ID` secret
+
+---
+
 ## Project Structure
 
 ```
