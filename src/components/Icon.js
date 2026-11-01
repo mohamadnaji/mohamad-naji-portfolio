@@ -2,6 +2,8 @@
 const PATHS = {
   arrow: <><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></>,
   arrowUpRight: <><path d="M7 17 17 7" /><path d="M7 7h10v10" /></>,
+  play: <path d="M6 4l14 8-14 8z" />,
+  branch: <><path d="M6 3v12" /><circle cx="18" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><path d="M18 9a9 9 0 0 1-9 9" /></>,
   up: <><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></>,
   download: <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /><path d="M12 15V3" /></>,
   linkedin: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></>,

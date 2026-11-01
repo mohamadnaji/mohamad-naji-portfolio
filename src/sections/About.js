@@ -1,5 +1,5 @@
 import Counter from '../components/Counter';
-import SectionHeading from '../components/SectionHeading';
+import SectionHeading, { annotation } from '../components/SectionHeading';
 import profile from '../assets/about/profile-about.png';
 import { FACTS, STATS } from '../data/portfolio';
 
@@ -7,7 +7,7 @@ export default function About() {
   return (
     <section className="band" id="about">
       <div className="wrap">
-        <SectionHeading eyebrow="about me" title="Turning complex problems into elegant solutions.">
+        <SectionHeading eyebrow={annotation('Component', 'about')} title="Turning complex problems into elegant solutions.">
           <p className="rv">Get to know me better: who I am, how I work, and what I care about in software.</p>
         </SectionHeading>
         <div className="about-grid">

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
 import Icon from '../components/Icon';
-import SectionHeading from '../components/SectionHeading';
+import SectionHeading, { annotation } from '../components/SectionHeading';
 import { CONTACTS } from '../data/portfolio';
 
 const RULES = {
@@ -88,7 +88,7 @@ export default function Contact() {
   return (
     <section className="band" id="contact">
       <div className="wrap">
-        <SectionHeading eyebrow="contact" title="Let's work together.">
+        <SectionHeading eyebrow={annotation('PostMapping', '/contact')} title="Let's work together.">
           <p className="rv">Ready to bring your ideas to life? Let&apos;s start the conversation.</p>
         </SectionHeading>
         <div className="contact-grid">

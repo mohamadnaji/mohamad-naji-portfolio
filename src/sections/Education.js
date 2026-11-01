@@ -1,12 +1,12 @@
 import Icon from '../components/Icon';
-import SectionHeading from '../components/SectionHeading';
+import SectionHeading, { annotation } from '../components/SectionHeading';
 import { EDUCATION } from '../data/portfolio';
 
 export default function Education() {
   return (
     <section className="band alt" id="education">
       <div className="wrap">
-        <SectionHeading eyebrow="education" title="My academic journey and qualifications." />
+        <SectionHeading eyebrow={annotation('Embeddable')} title="My academic journey and qualifications." />
         <div className="edu-grid">
           {EDUCATION.map((e, i) => (
             <article className="spot edu rv" key={e.degree} style={{ '--d': `${i * 0.1}s` }}>

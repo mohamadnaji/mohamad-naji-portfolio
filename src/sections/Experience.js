@@ -6,7 +6,7 @@ export default function Experience() {
   return (
     <section className="band alt" id="experience">
       <div className="wrap">
-        <SectionHeading eyebrow="work experience" title="My professional journey and key achievements.">
+        <SectionHeading eyebrow={<><span className="a">@Entity</span> <span className="a">@Table</span>(name = <span className="s">&quot;experience&quot;</span>)</>} title="My professional journey and key achievements.">
           <p className="rv">Banking platforms, fintech integrations and financial applications, from Lebanon to Montreal.</p>
         </SectionHeading>
         <div className="tl" id="timeline">

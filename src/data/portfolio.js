@@ -7,6 +7,12 @@ import ulLogo from '../assets/educations/ul.png';
 
 export const CV_URL = '/Mohamad_Naji_CV.pdf';
 
+// File shown in the IDE status bar for each section
+export const SECTION_FILES = {
+  home: 'MohamadNaji.java', about: 'About.java', services: 'Services.java', skills: 'pom.xml',
+  experience: 'Experience.java', projects: 'Projects.java', education: 'Education.java', contact: 'ContactController.java',
+};
+
 export const NAV = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
@@ -62,7 +68,7 @@ export const SERVICES = [
     features: ['FastAPI Development', 'Web Scraping (Selenium, BeautifulSoup)', 'Workflow Automation', 'Firebase Integration'],
   },
   {
-    icon: 'globe', color: 'var(--accent-2)', title: 'GIS & Data Science',
+    icon: 'globe', color: '#4FBF8B', title: 'GIS & Data Science',
     description: 'Geospatial analysis and data visualization with ESRI certification. Expertise in ArcGIS Pro, spatial data processing, and integrating GIS with modern web applications.',
     features: ['ArcGIS Pro & ESRI Tools', 'Spatial Data Analysis & Mapping', 'Web Scraping & Data Extraction', 'NLP & Text Processing (spaCy, NLTK)'],
   },
@@ -92,7 +98,7 @@ export const SKILL_GROUPS = [
     skills: [['Swagger & OpenAPI', 85, '3 years'], ['Liquibase', 85, '3 years'], ['RabbitMQ', 80, '3 years'], ['JUnit & Mockito', 80, '3 years'], ['Redis', 70, '2 years'], ['Firebase', 70, '1 year']],
   },
   {
-    title: 'Data Science & GIS', icon: 'chart', color: 'var(--accent-2)',
+    title: 'Data Science & GIS', icon: 'chart', color: '#4FBF8B',
     skills: [['BeautifulSoup', 80, '2 years'], ['Selenium', 80, '2 years'], ['ArcGIS Pro', 70, '1 year'], ['spaCy', 70, '2 years'], ['NLTK', 70, '2 years']],
   },
 ];

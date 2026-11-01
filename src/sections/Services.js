@@ -1,5 +1,5 @@
 import Icon from '../components/Icon';
-import SectionHeading from '../components/SectionHeading';
+import SectionHeading, { annotation } from '../components/SectionHeading';
 import SwipeDots from '../components/SwipeDots';
 import { SERVICES } from '../data/portfolio';
 
@@ -7,7 +7,7 @@ export default function Services() {
   return (
     <section className="band alt" id="services">
       <div className="wrap">
-        <SectionHeading eyebrow="services" title="What I can do for you.">
+        <SectionHeading eyebrow={annotation('Service', 'services')} title="What I can do for you.">
           <p className="rv">Leveraging 7+ years of expertise in backend development, databases, and modern tech stacks.</p>
         </SectionHeading>
         <SwipeDots>

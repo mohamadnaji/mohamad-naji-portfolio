@@ -2,6 +2,8 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import Icon from './Icon';
 import { NAV } from '../data/portfolio';
 import { prefersReducedMotion } from '../hooks/useEffects';
+import { useSectionNav } from '../hooks/useSectionNav';
+import { openTerminal, terminalShortcut } from './Terminal';
 
 const THEME_KEY = 'theme';
 const currentlyDark = () => getComputedStyle(document.documentElement).colorScheme.includes('dark');
@@ -43,26 +45,9 @@ function useTheme() {
   return [dark, toggle];
 }
 
-function useActiveSection() {
-  const [active, setActive] = useState('home');
-  useEffect(() => {
-    if (!('IntersectionObserver' in window)) return undefined;
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); }),
-      { rootMargin: '-45% 0px -50% 0px' }
-    );
-    NAV.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) io.observe(el);
-    });
-    return () => io.disconnect();
-  }, []);
-  return active;
-}
-
 export default function Header() {
   const [dark, toggleTheme] = useTheme();
-  const active = useActiveSection();
+  const { active } = useSectionNav();
   const [menuOpen, setMenuOpen] = useState(false);
   const [pill, setPill] = useState({ x: 0, w: 0 });
   const linksRef = useRef(null);
@@ -106,7 +91,10 @@ export default function Header() {
             ))}
           </nav>
           <div className="nav-right">
-            <button className="icon-btn" type="button" onClick={toggleTheme} aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}>
+            <button className="icon-btn" type="button" onClick={openTerminal} aria-label={`Open terminal (${terminalShortcut()})`}>
+              <span className="mono term-glyph" aria-hidden="true">&gt;_</span>
+            </button>
+            <button className="icon-btn" id="themeBtn" type="button" onClick={toggleTheme} aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}>
               <Icon name={dark ? 'sun' : 'moon'} />
             </button>
             <button ref={menuBtnRef} className="icon-btn menu-btn" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu" aria-expanded={menuOpen}>

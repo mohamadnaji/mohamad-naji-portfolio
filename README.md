@@ -23,9 +23,11 @@ No animation or icon libraries: icons are inline SVG (`src/components/Icon.js`).
 ```
 src/
   data/portfolio.js      # all site content: jobs, projects, skills, education, contacts
+  data/ide.js            # files shown in the hero code editor
   sections/              # Hero, About, Services, Skills, Experience, Projects, Education, Contact, Footer
-  components/            # Header (nav, theme, mobile menu), Icon, Marquee, HeroCanvas, Counter, SwipeDots, ...
+  components/            # Header, CodeEditor, StatusBar, Terminal, Icon, Marquee, HeroCanvas, Counter, SwipeDots, ...
   hooks/useEffects.js    # scroll reveal, scroll-linked effects, pointer effects
+  hooks/useSectionNav.js # active section tracking and precise section scrolling
   styles/global.css      # design tokens, layout, motion
 ```
 
@@ -36,7 +38,12 @@ To update content, edit `src/data/portfolio.js`.
 ## Features
 
 - Light/dark theme that follows the system, with a circular reveal when toggled (choice is remembered)
-- Animated hero: name reveal, typed roles, live "API" code card that tilts with the cursor, drifting light fields
+- Java/IntelliJ design language: Java blue and orange, Darcula/Light syntax colours, JetBrains Mono, Spring stereotype annotations as section labels
+- Hero code editor: `HireMohamadTest.java`, `MohamadNaji.java` and `application.yml` tabs that type themselves, line numbers, and a Run console (auto-plays until the visitor interacts)
+- IntelliJ-style status bar (desktop): branch, current section's file, live line number, Java 21
+- Developer terminal on Ctrl+K / ⌘K (`help`, `whoami`, `projects`, `cat <section>`, `mvn spring-boot:run`, ...)
+- Skills as cards or as a `pom.xml` of Maven dependencies; Spring-style banner in the browser console
+- Actuator-style status badge, drifting light fields, typed roles
 - Scroll progress bar, sticky nav with a sliding active-section pill, back-to-top ring
 - Section titles rise word by word; cards reveal in a stagger as you scroll
 - Tech strip that speeds up and follows your scroll direction

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Icon from '../components/Icon';
-import SectionHeading from '../components/SectionHeading';
+import SectionHeading, { annotation } from '../components/SectionHeading';
 import { CATEGORY_COLORS, PROJECTS } from '../data/portfolio';
 import { prefersReducedMotion } from '../hooks/useEffects';
 
@@ -82,7 +82,7 @@ export default function Projects() {
   return (
     <section className="band" id="projects">
       <div className="wrap">
-        <SectionHeading eyebrow="featured projects" title="Projects showcasing my technical expertise." />
+        <SectionHeading eyebrow={annotation('Repository', 'projects')} title="Projects showcasing my technical expertise." />
         <div className="filters rv" ref={filtersRef} role="group" aria-label="Filter projects">
           {pill && <span className="fpill" aria-hidden="true" style={pill} />}
           {CATEGORIES.map((c) => (

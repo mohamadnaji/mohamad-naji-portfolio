@@ -51,6 +51,8 @@ export function useScrollEffects() {
     const tlFill = document.getElementById('timelineFill');
     const toTop = document.getElementById('toTop');
     const ring = document.getElementById('toTopRing');
+    const cue = document.getElementById('scrollCue');
+    const line = document.getElementById('sbLn');
     let ticking = false;
 
     const update = () => {
@@ -61,10 +63,14 @@ export function useScrollEffects() {
       if (header) header.classList.toggle('scrolled', y > 10);
       if (toTop) toTop.classList.toggle('show', y > 600);
       if (ring) ring.style.strokeDashoffset = String(157 * (1 - p));
-      if (!reduce && hero) {
+      if (cue) cue.classList.toggle('gone', y > 40);
+      if (line) line.textContent = `Ln ${Math.floor(y / 24) + 1}, Col 1`;
+      if (hero) {
+        // Parallax only on wide screens; on phones the hero is tall and should stay solid.
+        const wide = window.innerWidth > 960;
         const h = Math.min(y, 700);
-        hero.style.transform = `translateY(${h * 0.18}px)`;
-        hero.style.opacity = String(1 - h / 900);
+        hero.style.transform = !reduce && wide ? `translateY(${h * 0.18}px)` : '';
+        hero.style.opacity = !reduce && wide ? String(1 - h / 900) : '';
       }
       if (tl && tlFill) {
         const r = tl.getBoundingClientRect();
