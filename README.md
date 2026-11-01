@@ -1,6 +1,6 @@
-# Mohamad NAJI — Portfolio v2
+# Mohamad NAJI — Portfolio v3
 
-A modern, performant single-page portfolio built with React 19 and Framer Motion. Features glassmorphism design, 3D tilt cards, parallax scroll, staggered entrance animations, and a fully functional contact form powered by EmailJS.
+A single-page developer portfolio built with React 19 and plain CSS. Dark-first with a light theme, scroll-driven motion, and a working contact form powered by EmailJS.
 
 ---
 
@@ -8,30 +8,43 @@ A modern, performant single-page portfolio built with React 19 and Framer Motion
 
 | Layer | Technology |
 |---|---|
-| Framework | React 19 |
-| Animations | Framer Motion 12 |
-| Icons | React Icons 5 |
-| Typing effect | React Type Animation |
+| Framework | React 19 (Create React App) |
+| Styling | One stylesheet with CSS custom properties (`src/styles/global.css`) |
+| Motion | CSS transitions, IntersectionObserver, Canvas, View Transitions API |
+| Fonts | Bricolage Grotesque, Geist, Geist Mono (Google Fonts) |
 | Contact form | EmailJS |
-| Styling | Plain CSS with CSS custom properties |
-| Build tool | Create React App (react-scripts 5) |
+
+No animation or icon libraries: icons are inline SVG (`src/components/Icon.js`).
+
+---
+
+## Project Structure
+
+```
+src/
+  data/portfolio.js      # all site content: jobs, projects, skills, education, contacts
+  sections/              # Hero, About, Services, Skills, Experience, Projects, Education, Contact, Footer
+  components/            # Header (nav, theme, mobile menu), Icon, Marquee, HeroCanvas, Counter, SwipeDots, ...
+  hooks/useEffects.js    # scroll reveal, scroll-linked effects, pointer effects
+  styles/global.css      # design tokens, layout, motion
+```
+
+To update content, edit `src/data/portfolio.js`.
 
 ---
 
 ## Features
 
-- Dark / Light theme toggle
-- Framer Motion `whileInView` stagger animations across all sections
-- 3D tilt cards with GPU-composited spotlight (TiltCard component)
-- Aurora background mesh with drifting orbs
-- Hero: word-by-word name reveal, parallax layers, scroll indicator, status badge
-- About: floating profile photo, stats row
-- Skills: skill item stagger, glassmorphism groups, display-mode pill toggle
-- Projects & Services: glassmorphism cards with shimmer hover sweep
-- Experience: vertical timeline with dot markers
-- Contact: floating-label form, EmailJS integration
-- Fully responsive (mobile / tablet / desktop)
-- `prefers-reduced-motion` support
+- Light/dark theme that follows the system, with a circular reveal when toggled (choice is remembered)
+- Animated hero: name reveal, typed roles, live "API" code card that tilts with the cursor, drifting light fields
+- Scroll progress bar, sticky nav with a sliding active-section pill, back-to-top ring
+- Section titles rise word by word; cards reveal in a stagger as you scroll
+- Tech strip that speeds up and follows your scroll direction
+- Experience timeline that fills as you scroll
+- Skills toggle (years / proficiency) with animated bars
+- Project filters with animated transitions and 3D tilt cards
+- Phone layout: swipeable Services, Skills and filter rows
+- Respects `prefers-reduced-motion`
 
 ---
 
