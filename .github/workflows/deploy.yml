@@ -9,6 +9,7 @@ on:
 env:
   PROJECT_NAME: "Mohamad Naji Portfolio"
   DEPLOY_PATH: /var/www/mohamad-naji-portfolio
+  SITE_URL: https://mohamadnaji.dev
 
 jobs:
   # ─────────────────────────────────────────
@@ -105,14 +106,19 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT || 22 }}
           script: |
-            echo "🏥 Running health check..."
-            sleep 3
-            HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" -k http://${{ secrets.SERVER_HOST }})
-            if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "🏥 Running health check on ${{ env.SITE_URL }}..."
+            HTTP_STATUS=000
+            for attempt in 1 2 3; do
+              sleep 3
+              HTTP_STATUS=$(curl -o /dev/null -s -L --max-time 15 -w "%{http_code}" ${{ env.SITE_URL }})
+              echo "Attempt $attempt: HTTP $HTTP_STATUS"
+              [ "$HTTP_STATUS" = "200" ] && break
+            done
+            if [ "$HTTP_STATUS" = "200" ]; then
               echo "✅ Site is up! (HTTP $HTTP_STATUS)"
               rm -rf ${{ env.DEPLOY_PATH }}/build-backup
             else
-              echo "❌ Health check failed! Rolling back..."
+              echo "❌ Health check failed (HTTP $HTTP_STATUS)! Rolling back..."
               rm -rf ${{ env.DEPLOY_PATH }}/build
               mv ${{ env.DEPLOY_PATH }}/build-backup ${{ env.DEPLOY_PATH }}/build
               exit 1
@@ -128,7 +134,7 @@ jobs:
           message: |
             ✅ *${{ env.PROJECT_NAME }} — Deployment Successful!*
 
-            🌍 Site: http://${{ secrets.SERVER_HOST }}
+            🌍 Site: ${{ env.SITE_URL }}
             👤 Triggered by: ${{ github.actor }}
             📝 Commit: ${{ github.event.head_commit.message }}
             📅 Time: ${{ github.event.head_commit.timestamp }}
